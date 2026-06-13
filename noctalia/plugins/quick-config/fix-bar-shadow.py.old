@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+import re
+import sys
+
+path = "/etc/xdg/quickshell/noctalia-shell/Modules/Bar/Bar.qml"
+
+with open(path) as f:
+    c = f.read()
+
+# Step 1: Replace Process-based reader with XHR-based reader
+old_reader = """  // Shadow state file reader
+  Process {
+    id: shadowReader
+    stdout: StdioCollector {}
+    stderr: StdioCollector {}
+    onExited: {
+      if (exitCode === 0 && stdout.text !== '') {
+        try {
+          var p = JSON.parse(stdout.text)
+          root.barShadowEnabled = p.on
+          root.barShadowColor = p.color
+          root.barShadowSoftness = p.softness
+          root.barShadowOffsetX = p.offsetX
+          root.barShadowOffsetY = p.offsetY
+        } catch(e) {}
+      }
+    }
+  }
+  Timer {
+    id: shadowTimer
+    interval: 2000
+    repeat: true
+    running: true
+    onTriggered: shadowReader.exec({ command: ['cat', '/tmp/niri-shadow.json'] })
+  }"""
+
+new_reader = """  // Shadow state reader (reads /tmp/niri-shadow.json via XHR)
+  Timer {
+    id: shadowTimer
+    interval: 2000
+    repeat: true
+    running: true
+    onTriggered: {
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', 'file:///tmp/niri-shadow.json')
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 0) {
+          try {
+            var p = JSON.parse(xhr.responseText)
+            root.barShadowEnabled = p.on
+            root.barShadowColor = p.color
+            root.barShadowSoftness = p.softness
+            root.barShadowOffsetX = p.offsetX
+            root.barShadowOffsetY = p.offsetY
+          } catch(e) {}
+        }
+      }
+      xhr.send()
+    }
+  }"""
+
+if old_reader not in c:
+    print("ERROR: Process reader pattern not found in Bar.qml")
+    sys.exit(1)
+
+c = c.replace(old_reader, new_reader, 1)
+print("OK: Replaced Process reader with XHR reader")
+
+with open(path, 'w') as f:
+    f.write(c)
+
+print("OK: Written to", path)
