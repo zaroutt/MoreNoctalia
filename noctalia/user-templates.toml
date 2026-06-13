@@ -1,9 +1,0 @@
-[config]
-
-[templates.oh-my-posh]
-input_path = "/home/za/.config/noctalia/oh-my-posh-atomic.template.json"
-output_path = "/home/za/.cache/oh-my-posh/themes/atomic.omp.json"
-
-[templates.opencode]
-input_path = "/home/za/.config/noctalia/opencode.template.json"
-output_path = "/home/za/.config/opencode/themes/noctalia.json"
