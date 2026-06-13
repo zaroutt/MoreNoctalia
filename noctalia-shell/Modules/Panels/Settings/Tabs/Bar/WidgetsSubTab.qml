@@ -115,7 +115,7 @@ ColumnLayout {
   }
 
   NText {
-    text: "Marque os widgets que devem ter fundo de cápsula. Mesmo sozinhos, eles ganham o fundo. Se houver 2+ consecutivos na mesma seção, eles se fundem em uma única cápsula."
+    text: "Select the widgets that should have a capsule background. Even alone, they get a background. If 2+ consecutive widgets in the same section are selected, they merge into a single capsule."
     wrapMode: Text.WordWrap
     Layout.fillWidth: true
     visible: Settings.data.bar.capsuleGroupEnabled
