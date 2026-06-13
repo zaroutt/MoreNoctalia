@@ -16,38 +16,48 @@ The goal of this configuration is to provide a cleaner and more compact desktop 
 
 ## Features
 
-### Added
+### advanced capsule customization
+<img width="589" height="713" alt="Screenshot from 2026-06-12 22-19-48" src="https://github.com/user-attachments/assets/3aa8f368-0515-4fd7-9c9d-07484ca5ac81" />
+<img width="346" height="858" alt="Screenshot from 2026-06-12 22-13-32" src="https://github.com/user-attachments/assets/15a9a4b9-f286-4d0e-bdd9-c12e5cdbc231" />
 
-* Quick Config widget 
-* Hover-reveal behavior for selected elements
-* More customizable capsule system\
-* Panels can have outlines
 
-### Modified
 
-#### Color Scheme Creator
+### Hover reveal widgets
 
-* Displays the currently active theme colors
-* Shows terminal color palette previews
-* Allows changing the primary theme color while automatically generating matching color variations
+<img width="589" height="733" alt="Screenshot from 2026-06-12 22-38-07" src="https://github.com/user-attachments/assets/a516f127-385d-48a5-a425-6c7d5de1874a" />
 
-#### Todo Widget
 
-* Simplified layout showing only task counts
+### Easy customization with two widgets
 
-#### Arch Updater Widget
+## Quick Config
+<img width="342" height="716" alt="Screenshot from 2026-06-12 22-25-58" src="https://github.com/user-attachments/assets/4ff329a7-21d7-4fe2-8043-c4ed93b6f8bb" />
 
-* Simplified layout showing only update counts
+- Niri (1-10): Blur Global, Blur Window, Square Corners, Focus Ring, Niri Shadow, Sync Radius, Sync Shadow, Rainbow Ring, Ring Width, Noise & Sat
+- Noctalia (11-18): Widgets, Filled BG, Noctalia Opacity, Kitty Glass, Snap Panels, Settings Mode, Panel Outline, No Colors
+- Bar (19-25): Bar Blur, Bar Opacity, Hover Reveal, Bar Outline, Bar Type, Position, Link Dark/Light
+- Widgets & Capsules (General) (26-31 + extras): Widget Outline, Capsule Outline, Group, Collapse, Fill, Widget Spacing (cicla inner padding 0→2→4→6→8→0), Content Outline, Capsule       Translucent
+- Section Capsules (32-36): Opacity L, Opacity C, Opacity R, Group Spacing (2→4→6→8→10→12), Inner Spacing (0→2→4→6→8)
 
-#### MediaMini Widget
+- It also save all the preference so it can load quickly
+  
+  <img width="342" height="337" alt="Screenshot from 2026-06-12 22-28-22" src="https://github.com/user-attachments/assets/abd58d86-e4e6-44b7-8d99-3b3b880cdc32" />
 
-* Displays only album artwork for a cleaner look
 
-### UI Changes
+  
+## Color scheme creator
+This modified version now reads the actual color theme and the color of the terminal(Only kitty)
+<img width="311" height="896" alt="Screenshot from 2026-06-12 22-27-42" src="https://github.com/user-attachments/assets/3f9bba7f-b0ee-4c0f-a4b0-6c355d99b9ce" />
 
-* Reworked panel animations
-* Various adjustments related to blur and opacity effects
-* Additional tweaks across multiple widgets and components to improve visual consistency
+## Preferences 
+
+- Media mini widget
+edited for it only show the album image
+
+- Todo and arch updater
+edited for it only show the number
+
+
+
 
 ## Installation
 
@@ -75,21 +85,14 @@ Then copy the configuration files to:
 Run the provided script to automatically copy all files:
 
 ```bash
-cd /path/to/tentativa
+git clone https://github.com/zaroutt/MoreNoctalia.git
+cd MoreNoctalia
+
 ./install.sh
 ```
 
 This will copy `noctalia/` to `~/.config/noctalia/` and `noctalia-shell/` to `/etc/xdg/quickshell/noctalia-shell/` (sudo required for the latter).
 
-### Option 3 — Replace the entire setup
-
-If the partial replacement does not work, replace the entire Noctalia Shell folder with the version provided in this repository.
-
-## Notes
-
-All the modifications were created through AI-assisted development. As a result, some changes may not be fully documented and additional files may have been modified beyond those listed above.
-
-The panel animation changes required adjustments to blur, opacity, and widget behavior, which may affect other parts of the shell.
 
 ## Warnings
 
