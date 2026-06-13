@@ -24,7 +24,8 @@ The goal of this configuration is to provide a cleaner and more compact desktop 
 
 ### Hover reveal widgets
 
-<img width="589" height="733" alt="Screenshot from 2026-06-12 22-38-07" src="https://github.com/user-attachments/assets/a516f127-385d-48a5-a425-6c7d5de1874a" />
+<img width="589" height="733" alt="Screenshot from 2026-06-12 22-38-07" src="https://github.com/user-attachments/assets/bcc8fa51-c5a4-4cb8-9cb1-963c7eb0b4fd" />
+
 
 
 ### Easy customization with two widgets
