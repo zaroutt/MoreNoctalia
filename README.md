@@ -70,7 +70,18 @@ Then copy the configuration files to:
 ~/.config/noctalia
 ```
 
-### Option 2 — Replace the entire setup
+### Option 2 — Using the install script
+
+Run the provided script to automatically copy all files:
+
+```bash
+cd /path/to/tentativa
+./install.sh
+```
+
+This will copy `noctalia/` to `~/.config/noctalia/` and `noctalia-shell/` to `/etc/xdg/quickshell/noctalia-shell/` (sudo required for the latter).
+
+### Option 3 — Replace the entire setup
 
 If the partial replacement does not work, replace the entire Noctalia Shell folder with the version provided in this repository.
 
