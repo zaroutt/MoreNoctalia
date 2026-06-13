@@ -1,4 +1,4 @@
-# My Noctalia Shell Setup
+# More Noctalia
 
 https://github.com/user-attachments/assets/ddad35bd-c9eb-487b-afdc-a4096de36096
 
@@ -62,6 +62,12 @@ edited for it only show the number
 
 ## Installation
 
+### Before installation
+for all the functionality works you should install
+- Noctalia shell first
+- Niri
+- Kitty
+
 ### Option 1 — Replace only the modified files
 
 Copy the following directories into:
@@ -93,6 +99,7 @@ cd MoreNoctalia
 ```
 
 This will copy `noctalia/` to `~/.config/noctalia/` and `noctalia-shell/` to `/etc/xdg/quickshell/noctalia-shell/` (sudo required for the latter).
+
 
 
 ## Warnings
