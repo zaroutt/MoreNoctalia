@@ -25,6 +25,10 @@ Item {
   property color colorBorderHover: Color.mOutline
   property real customRadius: -1 // -1 means use default (iRadiusL), otherwise use this value
 
+  // ── Sync Widget Colors: auto-apply from Color singleton ──
+  readonly property color effectiveColorFg: Color.syncedIconColor.a > 0 ? Color.syncedIconColor : colorFg
+  readonly property color effectiveColorFgHover: Color.syncedHoverColor.a > 0 ? Color.syncedHoverColor : colorFgHover
+
   // Expose border properties for backwards compatibility (aliases to visualButton)
   property alias border: visualButton.border
   property alias radius: visualButton.radius
@@ -71,7 +75,7 @@ Item {
       icon: root.icon
       pointSize: Style.toOdd(visualButton.width * 0.48)
       applyUiScale: root.applyUiScale
-      color: root.enabled && root.hovering && !PanelService.openedPanel ? colorFgHover : colorFg
+      color: root.enabled && root.hovering && !PanelService.openedPanel ? effectiveColorFgHover : effectiveColorFg
       // Pixel-perfect centering
       x: Style.pixelAlignCenter(visualButton.width, width)
       y: Style.pixelAlignCenter(visualButton.height, contentHeight)

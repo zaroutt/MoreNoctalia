@@ -64,9 +64,9 @@ Item {
   readonly property bool hasIcon: root.icon !== ""
 
   // Always prioritize hover color, then the custom one and finally the fallback color
-  readonly property color bgColor: effectiveHovered ? (customBackgroundHoverColor.a > 0 ? customBackgroundHoverColor : (customBackgroundColor.a > 0 ? customBackgroundColor : Style.capsuleColor)) : (customBackgroundColor.a > 0 ? customBackgroundColor : Style.capsuleColor)
+  readonly property color bgColor: effectiveHovered ? (Color.syncedHoverColor.a > 0 ? Color.syncedHoverColor : (customBackgroundHoverColor.a > 0 ? customBackgroundHoverColor : (customBackgroundColor.a > 0 ? customBackgroundColor : Style.capsuleColor))) : (customBackgroundColor.a > 0 ? customBackgroundColor : Style.capsuleColor)
   readonly property color fgColor: effectiveHovered ? (customTextIconColor.a > 0 ? customTextIconColor : Color.mOnHover) : (customTextIconColor.a > 0 ? customTextIconColor : Color.mOnSurface)
-  readonly property color iconFgColor: effectiveHovered ? (customIconColor.a > 0 ? customIconColor : (customTextIconColor.a > 0 ? customTextIconColor : Color.mOnHover)) : (customIconColor.a > 0 ? customIconColor : (customTextIconColor.a > 0 ? customTextIconColor : Color.mOnSurface))
+  readonly property color iconFgColor: Color.syncedIconColor.a > 0 ? Color.syncedIconColor : (effectiveHovered ? (customIconColor.a > 0 ? customIconColor : (customTextIconColor.a > 0 ? customTextIconColor : Color.mOnHover)) : (customIconColor.a > 0 ? customIconColor : (customTextIconColor.a > 0 ? customTextIconColor : Color.mOnSurface)))
   readonly property color textFgColor: effectiveHovered ? (customTextColor.a > 0 ? customTextColor : (customTextIconColor.a > 0 ? customTextIconColor : Color.mOnHover)) : (customTextColor.a > 0 ? customTextColor : (customTextIconColor.a > 0 ? customTextIconColor : Color.mOnSurface))
 
   readonly property real iconSize: Style.toOdd(pillHeight * 0.48)

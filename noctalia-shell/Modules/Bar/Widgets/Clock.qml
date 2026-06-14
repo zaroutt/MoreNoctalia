@@ -3,7 +3,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import qs.Commons
-import Quickshell.Io
 import qs.Modules.Bar.Extras
 import qs.Services.UI
 import qs.Widgets
@@ -46,41 +45,7 @@ Item {
   readonly property string formatVertical: widgetSettings.formatVertical !== undefined ? widgetSettings.formatVertical : widgetMetadata.formatVertical
   readonly property string tooltipFormat: widgetSettings.tooltipFormat !== undefined ? widgetSettings.tooltipFormat : widgetMetadata.tooltipFormat
 
-  // Sync-colors state for count color
-  property bool _syncActive: false
-  property string _syncCountKey: "none"
-
-  readonly property color textColor: _syncActive && _syncCountKey !== "none" ? Color.resolveColorKey(_syncCountKey) : Color.resolveColorKey(clockColor)
-
-  // Load synced count color from sync-colors.json
-  FileView {
-    id: _syncColorsView
-    path: Quickshell.env("HOME") + "/.config/noctalia/sync-colors.json"
-    printErrors: false
-    watchChanges: true
-    onFileChanged: {
-      if (!_syncColorsTimer.running) _syncColorsTimer.start()
-      else _syncColorsTimer.restart()
-    }
-    onLoaded: {
-      try {
-        var d = JSON.parse(text())
-        root._syncActive = d.syncWidgetColors ?? false
-        root._syncCountKey = d.syncedCountColor ?? "none"
-      } catch(e) {}
-    }
-    onLoadFailed: {
-      root._syncActive = false
-      root._syncCountKey = "none"
-    }
-  }
-
-  Timer {
-    id: _syncColorsTimer
-    interval: 150
-    repeat: false
-    onTriggered: _syncColorsView.reload()
-  }
+  readonly property color textColor: Color.syncedIconColor.a > 0 ? Color.syncedIconColor : Color.resolveColorKey(clockColor)
 
   // Content dimensions for implicit sizing
   readonly property real contentWidth: isBarVertical ? capsuleHeight : Math.round((isBarVertical ? verticalLoader.implicitWidth : horizontalLoader.implicitWidth) + Style.margin2M)

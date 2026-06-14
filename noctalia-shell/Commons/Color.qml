@@ -414,6 +414,40 @@ Singleton {
     return Qt.alpha(baseColor, resultAlpha);
   }
 
+  // ── Synced Widget Colors (from sync-colors.json, resolved via FileView) ──
+  // Widgets reference these directly — no per-widget FileView needed.
+  property bool syncWidgetColors: false
+  property string _syncIconKey: "none"
+  property string _syncCountKey: "none"
+  property string _syncHoverKey: "none"
+
+  readonly property color syncedIconColor: root.syncWidgetColors && root._syncIconKey !== "none" ? root.resolveColorKey(root._syncIconKey) : "transparent"
+  readonly property color syncedCountColor: root.syncWidgetColors && root._syncCountKey !== "none" ? root.resolveColorKey(root._syncCountKey) : "transparent"
+  readonly property color syncedHoverColor: root.syncWidgetColors && root._syncHoverKey !== "none" ? root.resolveColorKey(root._syncHoverKey) : "transparent"
+
+  FileView {
+    id: syncColorsFile
+    path: Settings.directoriesCreated ? (Quickshell.env("HOME") + "/.config/noctalia/sync-colors.json") : undefined
+    printErrors: false
+    watchChanges: true
+    onFileChanged: reload()
+    onLoaded: {
+      try {
+        var d = JSON.parse(text())
+        root.syncWidgetColors = d.syncWidgetColors ?? false
+        root._syncIconKey = d.syncedIconColor ?? "none"
+        root._syncCountKey = d.syncedCountColor ?? "none"
+        root._syncHoverKey = d.syncedHoverColor ?? "none"
+      } catch(e) {}
+    }
+    onLoadFailed: {
+      root.syncWidgetColors = false
+      root._syncIconKey = "none"
+      root._syncCountKey = "none"
+      root._syncHoverKey = "none"
+    }
+  }
+
   readonly property var colorKeyModel: [
     {
       "key": "none",

@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Io
 import qs.Commons
 import qs.Modules.Bar.Extras
 import qs.Services.Media
@@ -51,47 +50,7 @@ Item {
   readonly property bool useFixedWidth: widgetSettings.useFixedWidth !== undefined ? widgetSettings.useFixedWidth : widgetMetadata.useFixedWidth
   readonly property real maxWidth: widgetSettings.maxWidth !== undefined ? widgetSettings.maxWidth : Math.max(widgetMetadata.maxWidth, screen ? screen.width * 0.06 : 0)
   readonly property string textColorKey: widgetSettings.textColor !== undefined ? widgetSettings.textColor : widgetMetadata.textColor
-  readonly property color textColor: Color.resolveColorKey(textColorKey)
-
-  // ── Sync Widget Colors ──
-  property bool _sync: false
-  property string _syncIconKey: "none"
-  property color _syncIconColor: "transparent"
-  property color _syncHoverColor: "transparent"
-  property bool _hovered: false
-
-  Timer {
-    id: _syncColorsDebounce
-    interval: 150
-    repeat: false
-    onTriggered: _syncColorsView.reload()
-  }
-
-  FileView {
-    id: _syncColorsView
-    path: Quickshell.env("HOME") + "/.config/noctalia/sync-colors.json"
-    printErrors: false
-    watchChanges: true
-    onFileChanged: {
-      if (!_syncColorsDebounce.running) _syncColorsDebounce.start()
-      else _syncColorsDebounce.restart()
-    }
-    onLoaded: {
-      try {
-        var d = JSON.parse(text())
-        root._sync = d.syncWidgetColors ?? false
-        root._syncIconKey = d.syncedIconColor ?? "none"
-        root._syncIconColor = root._sync && root._syncIconKey !== "none" ? Color.resolveColorKey(root._syncIconKey) : "transparent"
-        root._syncHoverColor = root._sync && d.syncedHoverColor && d.syncedHoverColor !== "none" ? Color.resolveColorKey(d.syncedHoverColor) : "transparent"
-      } catch(e) {}
-    }
-    onLoadFailed: {
-      root._sync = false
-      root._syncIconKey = "none"
-      root._syncIconColor = "transparent"
-      root._syncHoverColor = "transparent"
-    }
-  }
+  readonly property color textColor: Color.syncedIconColor.a > 0 ? Color.syncedIconColor : Color.resolveColorKey(textColorKey)
 
   // Dimensions
   readonly property int artSize: Style.toOdd(capsuleHeight * 0.85)
@@ -269,7 +228,7 @@ Item {
     width: Style.toOdd(isVertical ? (isHidden ? 0 : verticalSize) : (isHidden ? 0 : contentWidth))
     height: Style.toOdd(isVertical ? (isHidden ? 0 : verticalSize) : capsuleHeight)
     radius: isVertical ? width / 2 : Style.radiusM
-    color: root._sync && root._syncHoverColor !== "transparent" && root._hovered ? root._syncHoverColor : Style.capsuleColor
+    color: Color.syncedHoverColor.a > 0 && mouseArea.containsMouse ? Color.syncedHoverColor : Style.capsuleColor
     border.color: Style.capsuleBorderColor
     border.width: Style.capsuleBorderWidth
 
@@ -333,8 +292,6 @@ Item {
             visible: showProgressRing
             progress: MediaService.trackLength > 0 ? MediaService.currentPosition / MediaService.trackLength : 0
             lineWidth: root.progressWidth
-            hovered: root._hovered
-            syncActive: root._sync && root._syncHoverColor !== "transparent"
           }
 
           NImageRounded {
@@ -365,8 +322,6 @@ Item {
           visible: showProgressRing
           progress: MediaService.trackLength > 0 ? MediaService.currentPosition / MediaService.trackLength : 0
           lineWidth: root.progressWidth
-          hovered: root._hovered
-          syncActive: root._sync && root._syncHoverColor !== "transparent"
         }
 
         NImageRounded {
@@ -415,7 +370,6 @@ Item {
                }
 
     onEntered: {
-      root._hovered = true
       if (!root || !screen) {
         return;
       }
@@ -427,10 +381,7 @@ Item {
         }
       }
     }
-    onExited: {
-      root._hovered = false
-      TooltipService.hide()
-    }
+    onExited: TooltipService.hide()
   }
 
   // Components
@@ -475,8 +426,6 @@ Item {
   component ProgressRing: Canvas {
     property real progress: 0
     property real lineWidth: 2
-    property bool hovered: false
-    property bool syncActive: false
 
     function repaint() {
       if (this.visible && this.opacity > 0)
@@ -484,8 +433,6 @@ Item {
     }
 
     onProgressChanged: repaint()
-    onHoveredChanged: repaint()
-    onSyncActiveChanged: repaint()
     Component.onCompleted: repaint()
 
     Connections {
@@ -510,14 +457,14 @@ Item {
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
       ctx.lineWidth = lineWidth;
-      ctx.strokeStyle = hovered && syncActive ? Qt.rgba(0, 0, 0, 0.3) : Qt.alpha(Color.mOnSurface, 0.4);
+      ctx.strokeStyle = Qt.alpha(Color.mOnSurface, 0.4);
       ctx.stroke();
 
       // Progress
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius, -Math.PI / 2, -Math.PI / 2 + progress * 2 * Math.PI);
       ctx.lineWidth = lineWidth;
-      ctx.strokeStyle = hovered && syncActive ? Qt.rgba(0, 0, 0, 0.5) : Color.mPrimary;
+      ctx.strokeStyle = Color.mPrimary;
       ctx.lineCap = "round";
       ctx.stroke();
     }
