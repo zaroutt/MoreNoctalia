@@ -18,6 +18,9 @@ WALLPAPER_CACHE = "/home/za/.cache/noctalia/wallpapers.json"
 LOCK_FILE = "/tmp/niri-toggle.lock"
 NOCTALIA_SETTINGS = "/home/za/.config/noctalia/settings.json"
 SYNC_COLORS_FILE = "/home/za/.config/noctalia/sync-colors.json"
+OMP_TEMPLATE = "/home/za/.config/noctalia/oh-my-posh-atomic.template.json"
+USER_TEMPLATES_TOML = "/home/za/.config/noctalia/user-templates.toml"
+TEMPLATE_PROCESSOR = "/etc/xdg/quickshell/noctalia-shell/Scripts/python/src/theming/template-processor.py"
 
 
 def atomic_write(path: str, content: str):
@@ -41,6 +44,13 @@ def load_snapshots():
 
 def save_snapshots(snapshots):
     atomic_write(SNAPSHOTS_FILE, json.dumps(snapshots, indent=2))
+
+def _read_file(path):
+    try:
+        with open(path) as f:
+            return f.read()
+    except:
+        return ""
 
 def get_niri_global_blur_state():
     """Read global blur block from config.kdl: returns True/False"""
@@ -251,7 +261,8 @@ def cmd_save(widget_json):
         "wallpaperLight": get_current_wallpaper_light(),
         "niriBorder": get_niri_border(),
         "niriShadow": get_niri_shadow(),
-        "kittyOpacity": get_kitty_opacity()
+        "kittyOpacity": get_kitty_opacity(),
+        "ompTemplate": _read_file(OMP_TEMPLATE)
     }
     snapshots = load_snapshots()
     snapshots.append(snapshot)
@@ -509,6 +520,25 @@ def _do_load(index):
 
     # ── Phase 8: sync niri shadow → noctalia bar shadow ───────────
     write_shadow_to_settings(parse_niri_shadow_props())
+
+    # ── Phase 9: restore OMP template ─────────────────────────────
+    omp_template = snap.get("ompTemplate")
+    if omp_template:
+        atomic_write(OMP_TEMPLATE, omp_template)
+        try:
+            scheme_json = os.path.expanduser("~/.cache/noctalia/predefined-scheme.json")
+            settings = {}
+            try:
+                with open(NOCTALIA_SETTINGS) as f:
+                    settings = json.load(f)
+            except:
+                pass
+            mode = "dark" if settings.get("colorSchemes", {}).get("darkMode", True) else "light"
+            subprocess.run(["python3", TEMPLATE_PROCESSOR, "", "--scheme", scheme_json,
+                          "--config", USER_TEMPLATES_TOML, "--default-mode", mode],
+                         capture_output=True, timeout=10)
+        except:
+            pass
 
     print(json.dumps(snap))
 

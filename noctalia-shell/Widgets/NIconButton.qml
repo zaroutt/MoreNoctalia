@@ -27,7 +27,7 @@ Item {
 
   // ── Sync Widget Colors: auto-apply from Color singleton ──
   readonly property color effectiveColorFg: Color.syncedIconColor.a > 0 ? Color.syncedIconColor : colorFg
-  readonly property color effectiveColorFgHover: Color.syncedHoverColor.a > 0 ? Color.syncedHoverColor : colorFgHover
+  readonly property color effectiveColorFgHover: Color.syncedIconColor.a > 0 ? Color.syncedIconColor : colorFgHover
 
   // Expose border properties for backwards compatibility (aliases to visualButton)
   property alias border: visualButton.border
@@ -49,7 +49,14 @@ Item {
   implicitWidth: buttonSize
   implicitHeight: buttonSize
 
-  opacity: enabled ? 1.0 : 0.6
+  // Disabled visual: dim the visual button instead of changing item opacity,
+  // so the hover reveal system (BarWidgetLoader) can control opacity freely.
+  Component.onCompleted: {
+    if (!enabled) visualButton.opacity = 0.6
+  }
+  onEnabledChanged: {
+    visualButton.opacity = enabled ? 1.0 : 0.6
+  }
 
   // Visual button - stays at buttonSize, centered in parent
   Rectangle {

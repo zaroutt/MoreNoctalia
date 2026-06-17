@@ -94,6 +94,7 @@ Item {
     if (root.needsSpectrum) {
       SpectrumService.registerComponent(root.spectrumComponentId);
     }
+    _updateBaseOpacity();
   }
 
   Component.onDestruction: {
@@ -106,7 +107,14 @@ Item {
   implicitWidth: isVertical ? (isHidden ? 0 : verticalSize) : (isHidden ? 0 : contentWidth)
   implicitHeight: isVertical ? (isHidden ? 0 : verticalSize) : capsuleHeight
   visible: !shouldHideIdle && !shouldHideEmpty
-  opacity: isHidden ? 0.0 : ((hideMode === "transparent" && !hasPlayer) ? 0.0 : 1.0)
+  // Opacity updated imperatively so the hover reveal system (BarWidgetLoader)
+  // can also control opacity without a binding overriding it.
+  onIsHiddenChanged: _updateBaseOpacity()
+  onHasPlayerChanged: _updateBaseOpacity()
+  onHideModeChanged: _updateBaseOpacity()
+  function _updateBaseOpacity() {
+    opacity = isHidden ? 0.0 : ((hideMode === "transparent" && !hasPlayer) ? 0.0 : 1.0)
+  }
 
   property real mainContentWidth: 0
   readonly property real contentWidth: {

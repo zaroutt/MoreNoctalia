@@ -52,8 +52,8 @@
           "type": "git"
         },
         {
-          "background": "#000000",
-          "foreground": "#f8bc45",
+          "background": "{{colors.surface_variant.default.hex}}",
+          "foreground": "{{colors.on_surface.default.hex}}",
           "options": {
             "style": "roundrock",
             "threshold": 0
@@ -210,8 +210,8 @@
           "type": "kubectl"
         },
         {
-          "background": "#000000",
-          "foreground": "#f8bc45",
+          "background": "{{colors.surface_variant.default.hex}}",
+          "foreground": "{{colors.on_surface.default.hex}}",
           "leading_diamond": "\ue0b6",
           "trailing_diamond": "<transparent,background>\ue0b2</>",
           "options": {

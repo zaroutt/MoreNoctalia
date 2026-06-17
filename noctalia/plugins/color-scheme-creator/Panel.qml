@@ -25,82 +25,34 @@ Item {
   property var originalColors: null
   property string pendingSchemeName: ""
   property string generatePrimaryColor: "#7aa2f7"
+  property int activeTab: 0 // 0=Color Roles, 1=Terminal, 2=Oh My Posh
 
-  // Restore colors when panel is destroyed (closes) while preview is active
   Component.onDestruction: {
     root.stopPreview();
   }
 
-
+  // ── Color Roles ──────────────────────────────────────────────
   readonly property var colorRoles: [
-    {
-      key: "mPrimary",
-      label: "Primary"
-    },
-    {
-      key: "mOnPrimary",
-      label: "On Primary"
-    },
-    {
-      key: "mSecondary",
-      label: "Secondary"
-    },
-    {
-      key: "mOnSecondary",
-      label: "On Secondary"
-    },
-    {
-      key: "mTertiary",
-      label: "Tertiary"
-    },
-    {
-      key: "mOnTertiary",
-      label: "On Tertiary"
-    },
-    {
-      key: "mError",
-      label: "Error"
-    },
-    {
-      key: "mOnError",
-      label: "On Error"
-    },
-    {
-      key: "mSurface",
-      label: "Surface"
-    },
-    {
-      key: "mOnSurface",
-      label: "On Surface"
-    },
-    {
-      key: "mSurfaceVariant",
-      label: "Surface Variant"
-    },
-    {
-      key: "mOnSurfaceVariant",
-      label: "On Surface Variant"
-    },
-    {
-      key: "mOutline",
-      label: "Outline"
-    },
-    {
-      key: "mShadow",
-      label: "Shadow"
-    },
-    {
-      key: "mHover",
-      label: "Hover"
-    },
-    {
-      key: "mOnHover",
-      label: "On Hover"
-    }
+    { key: "mPrimary", label: "Primary" },
+    { key: "mOnPrimary", label: "On Primary" },
+    { key: "mSecondary", label: "Secondary" },
+    { key: "mOnSecondary", label: "On Secondary" },
+    { key: "mTertiary", label: "Tertiary" },
+    { key: "mOnTertiary", label: "On Tertiary" },
+    { key: "mError", label: "Error" },
+    { key: "mOnError", label: "On Error" },
+    { key: "mSurface", label: "Surface" },
+    { key: "mOnSurface", label: "On Surface" },
+    { key: "mSurfaceVariant", label: "Surface Variant" },
+    { key: "mOnSurfaceVariant", label: "On Surface Variant" },
+    { key: "mOutline", label: "Outline" },
+    { key: "mShadow", label: "Shadow" },
+    { key: "mHover", label: "Hover" },
+    { key: "mOnHover", label: "On Hover" }
   ]
 
+  // ── Terminal Colors ──────────────────────────────────────────
   readonly property var terminalColorRoles: [
-    // Normal 8
     { path: ["normal","black"], label: "Black" },
     { path: ["normal","red"], label: "Red" },
     { path: ["normal","green"], label: "Green" },
@@ -109,7 +61,6 @@ Item {
     { path: ["normal","magenta"], label: "Magenta" },
     { path: ["normal","cyan"], label: "Cyan" },
     { path: ["normal","white"], label: "White" },
-    // Bright 8
     { path: ["bright","black"], label: "Bright Black" },
     { path: ["bright","red"], label: "Bright Red" },
     { path: ["bright","green"], label: "Bright Green" },
@@ -118,7 +69,6 @@ Item {
     { path: ["bright","magenta"], label: "Bright Magenta" },
     { path: ["bright","cyan"], label: "Bright Cyan" },
     { path: ["bright","white"], label: "Bright White" },
-    // Special
     { path: ["foreground"], label: "Foreground" },
     { path: ["background"], label: "Background" },
     { path: ["selectionFg"], label: "Selection Fg" },
@@ -127,9 +77,149 @@ Item {
     { path: ["cursorText"], label: "Cursor Text" }
   ]
 
+  // ── OMP Color Roles (all segments) ───────────────────────────
+  // Each entry: { key, label }
+  // Background and foreground are separate rows
+  readonly property var ompColorRoles: [
+    // Left block
+    { key: "omp_shell_bg",          label: "Shell BG" },
+    { key: "omp_shell_fg",          label: "Shell FG" },
+    { key: "omp_root_bg",           label: "Root BG" },
+    { key: "omp_root_fg",           label: "Root FG" },
+    { key: "omp_path_bg",           label: "Path BG" },
+    { key: "omp_path_fg",           label: "Path FG" },
+    { key: "omp_git_bg",            label: "Git BG" },
+    { key: "omp_git_fg",            label: "Git FG" },
+    { key: "omp_executiontime_bg",  label: "Exec Time BG" },
+    { key: "omp_executiontime_fg",  label: "Exec Time FG" },
+    // Right block — language segments
+    { key: "omp_node_bg",           label: "Node BG" },
+    { key: "omp_node_fg",           label: "Node FG" },
+    { key: "omp_python_bg",         label: "Python BG" },
+    { key: "omp_python_fg",         label: "Python FG" },
+    { key: "omp_java_bg",           label: "Java BG" },
+    { key: "omp_java_fg",           label: "Java FG" },
+    { key: "omp_dotnet_bg",         label: ".NET BG" },
+    { key: "omp_dotnet_fg",         label: ".NET FG" },
+    { key: "omp_go_bg",             label: "Go BG" },
+    { key: "omp_go_fg",             label: "Go FG" },
+    { key: "omp_rust_bg",           label: "Rust BG" },
+    { key: "omp_rust_fg",           label: "Rust FG" },
+    { key: "omp_dart_bg",           label: "Dart BG" },
+    { key: "omp_dart_fg",           label: "Dart FG" },
+    { key: "omp_angular_bg",        label: "Angular BG" },
+    { key: "omp_angular_fg",        label: "Angular FG" },
+    { key: "omp_aurelia_bg",        label: "Aurelia BG" },
+    { key: "omp_aurelia_fg",        label: "Aurelia FG" },
+    { key: "omp_nx_bg",             label: "Nx BG" },
+    { key: "omp_nx_fg",             label: "Nx FG" },
+    { key: "omp_julia_bg",          label: "Julia BG" },
+    { key: "omp_julia_fg",          label: "Julia FG" },
+    { key: "omp_ruby_bg",           label: "Ruby BG" },
+    { key: "omp_ruby_fg",           label: "Ruby FG" },
+    { key: "omp_azfunc_bg",         label: "Az Func BG" },
+    { key: "omp_azfunc_fg",         label: "Az Func FG" },
+    { key: "omp_aws_bg",            label: "AWS BG" },
+    { key: "omp_aws_fg",            label: "AWS FG" },
+    { key: "omp_kubectl_bg",        label: "Kubectl BG" },
+    { key: "omp_kubectl_fg",        label: "Kubectl FG" },
+    // Right block — system segments
+    { key: "omp_os_bg",             label: "OS BG" },
+    { key: "omp_os_fg",             label: "OS FG" },
+    { key: "omp_battery_bg",        label: "Battery BG" },
+    { key: "omp_battery_fg",        label: "Battery FG" },
+    { key: "omp_time_bg",           label: "Time BG" },
+    { key: "omp_time_fg",           label: "Time FG" },
+    { key: "omp_status_fg",         label: "Status FG" }
+  ]
+
+  // Fixed brand defaults for language/tech segments
+  readonly property var ompHardcodedDefaults: ({
+    "omp_node_bg":           "#303030",
+    "omp_node_fg":           "#3C873A",
+    "omp_python_bg":         "#306998",
+    "omp_python_fg":         "#FFE873",
+    "omp_java_bg":           "#0e8ac8",
+    "omp_java_fg":           "#ffffff",
+    "omp_dotnet_bg":         "#0e0e0e",
+    "omp_dotnet_fg":         "#0d6da8",
+    "omp_go_bg":             "#ffffff",
+    "omp_go_fg":             "#06aad5",
+    "omp_rust_bg":           "#f3f0ec",
+    "omp_rust_fg":           "#925837",
+    "omp_dart_bg":           "#e1e8e9",
+    "omp_dart_fg":           "#055b9c",
+    "omp_angular_bg":        "#ffffff",
+    "omp_angular_fg":        "#ce092f",
+    "omp_aurelia_bg":        "#ffffff",
+    "omp_aurelia_fg":        "#de1f84",
+    "omp_nx_bg":             "#1e293b",
+    "omp_nx_fg":             "#ffffff",
+    "omp_julia_bg":          "#945bb3",
+    "omp_julia_fg":          "#359a25",
+    "omp_ruby_bg":           "#ffffff",
+    "omp_ruby_fg":           "#9c1006",
+    "omp_azfunc_bg":         "#ffffff",
+    "omp_azfunc_fg":         "#5398c2",
+    "omp_aws_bg":            "#565656",
+    "omp_aws_fg":            "#faa029",
+    "omp_kubectl_bg":        "#316ce4",
+    "omp_kubectl_fg":        "#ffffff",
+    "omp_battery_bg":        "#f36943",
+    "omp_battery_fg":        "#262626"
+  })
+
+  // MD3 fallback for theme-adaptive OMP colors
+  readonly property var ompMd3Fallbacks: ({
+    "omp_shell_bg":          "mPrimary",
+    "omp_shell_fg":          "mOnPrimary",
+    "omp_root_bg":           "mError",
+    "omp_root_fg":           "mOnError",
+    "omp_path_bg":           "mTertiary",
+    "omp_path_fg":           "mOnTertiary",
+    "omp_git_bg":            "mSurfaceVariant",
+    "omp_git_fg":            "mOnSurface",
+    "omp_executiontime_bg":  "mSurfaceVariant",
+    "omp_executiontime_fg":  "mOnSurface",
+    "omp_os_bg":             "mSurfaceVariant",
+    "omp_os_fg":             "mOnSurface",
+    "omp_time_bg":           "mSecondary",
+    "omp_time_fg":           "mOnSecondary",
+    "omp_status_fg":         "mPrimary"
+  })
+
+  function getOmpColor(variant, key) {
+    if (variant[key] !== undefined && variant[key] !== null) return variant[key];
+    // Try MD3 fallback
+    var md3Key = root.ompMd3Fallbacks[key];
+    if (md3Key && variant[md3Key]) return variant[md3Key];
+    // Try hardcoded fallback
+    if (root.ompHardcodedDefaults[key]) return root.ompHardcodedDefaults[key];
+    return "#000000";
+  }
+
+  function ensureOmpColors(variant) {
+    if (!variant) return;
+    for (var key in root.ompHardcodedDefaults) {
+      if (variant[key] === undefined || variant[key] === null) {
+        variant[key] = root.ompHardcodedDefaults[key];
+      }
+    }
+  }
+
+  function resetOmpColors() {
+    if (!root.editingScheme) return;
+    var updated = JSON.parse(JSON.stringify(root.editingScheme));
+    var allKeys = Object.keys(root.ompHardcodedDefaults).concat(Object.keys(root.ompMd3Fallbacks));
+    for (var i = 0; i < allKeys.length; i++) {
+      delete updated.dark[allKeys[i]];
+      delete updated.light[allKeys[i]];
+    }
+    root.editingScheme = updated;
+  }
+
   anchors.fill: parent
 
-  // pluginApi is set AFTER Component.onCompleted fires, so we initialize here
   onPluginApiChanged: {
     if (!pluginApi)
       return;
@@ -164,6 +254,8 @@ Item {
         root.editingScheme.dark.terminal = generateTerminalColors(root.editingScheme.dark);
       if (!root.editingScheme.light.terminal)
         root.editingScheme.light.terminal = generateTerminalColors(root.editingScheme.light);
+      root.ensureOmpColors(root.editingScheme.dark);
+      root.ensureOmpColors(root.editingScheme.light);
     }
   }
 
@@ -220,6 +312,10 @@ Item {
         Settings.data.colorSchemes.predefinedScheme = name;
         ColorSchemeService.applyScheme(filePath);
         ColorSchemeService.loadColorSchemes();
+        root.previewActive = false;
+        root.originalColors = null;
+        clearWip();
+        seedEditor();
         ToastService.showNotice(pluginApi?.tr("panel.title"), pluginApi?.tr("notifications.saved"));
       } else {
         ToastService.showError(pluginApi?.tr("panel.title"), pluginApi?.tr("notifications.save-error"));
@@ -262,6 +358,9 @@ Item {
       if (root.pickerTargetKey.startsWith("terminal:")) {
         var path = root.pickerTargetKey.substring(9).split(".");
         setTerminalAt(target, path, color.toString());
+      } else if (root.pickerTargetKey.startsWith("omp:")) {
+        var ompKey = root.pickerTargetKey.substring(4);
+        target[ompKey] = color.toString();
       } else {
         target[root.pickerTargetKey] = color.toString();
       }
@@ -296,8 +395,6 @@ Item {
   }
 
   function fallbackScheme() {
-    // Used only when no predefined scheme is available (e.g. wallpaper colors).
-    // Both variants start from the active Color.m* — user will need to adjust the other manually.
     var seed = seedColors();
     return {
       dark: seed,
@@ -334,15 +431,14 @@ Item {
     root.stopPreview();
     nameInput.text = "";
     root.editingVariant = "dark";
+    root.activeTab = 0;
     var useWallpaper = Settings.data.colorSchemes.useWallpaperColors;
     var predefined = Settings.data.colorSchemes.predefinedScheme;
     if (!useWallpaper && predefined) {
-      // Load from scheme file (has both dark + light variants)
       var path = ColorSchemeService.resolveSchemePath(predefined);
       schemeFileReader.path = "";
       schemeFileReader.path = path;
     } else {
-      // Wallpaper mode — load current colors.json (single set)
       paletteProc.exec({ command: ["python3", "-c", "import sys,json; print(json.dumps(json.load(open(sys.argv[1]))))", Settings.configDir + "colors.json"] })
     }
   }
@@ -414,9 +510,6 @@ Item {
     };
   }
 
-  // Derive terminal ANSI colors from MD3 color roles so terminal themes generate correctly.
-  // green and yellow have no MD3 equivalents so we synthesize them from the primary's
-  // saturation/value at standard ANSI hues (135° green, 55° yellow).
   function generateTerminalColors(variant) {
     var surface = Qt.color(variant.mSurface);
     var isDark = (surface.r + surface.g + surface.b) / 3 < 0.5;
@@ -482,13 +575,123 @@ Item {
     };
     var json = JSON.stringify(payload, null, 2);
     root.pendingSchemeName = name;
-    writeProcess.command = ["python3", "-c", "import sys, os, json; d=json.loads(sys.argv[1]); os.makedirs(sys.argv[2], exist_ok=True); open(sys.argv[3],'w').write(json.dumps(d, indent=2))", json, dir, filePath];
+    var mode = Settings.data.colorSchemes.darkMode ? "dark" : "light";
+    var ompOutput = Settings.cacheDir + "oh-my-posh/themes/atomic.omp.json";
+    var patchScript = Settings.configDir + "patch-omp-theme.py";
+    // Single Python command: write scheme, then patch OMP theme
+    var py = "import sys, os, subprocess, json; "
+           + "d=json.loads(sys.argv[1]); "
+           + "os.makedirs(sys.argv[2], exist_ok=True); "
+           + "open(sys.argv[3],'w').write(json.dumps(d, indent=2)); "
+           + "subprocess.run(['python3', sys.argv[4], '--scheme', sys.argv[3], '--mode', sys.argv[5], '--output', sys.argv[6]])";
+    writeProcess.command = ["python3", "-c", py, json, dir, filePath, patchScript, mode, ompOutput];
     writeProcess.running = true;
-    // Clear preview state without restoring — saved colors are already applied
-    root.previewActive = false;
-    root.originalColors = null;
-    clearWip();
-    seedEditor();
+  }
+
+  // ── Helper: Section Header ────────────────────────────────────
+  component SectionHeader: NText {
+    property string title
+    text: title
+    color: Color.mOnSurfaceVariant
+    pointSize: Style.fontSizeXXS
+    font.weight: Font.Bold
+  }
+
+  // ── Helper: Column Headers (Dark | Light) ─────────────────────
+  component ColumnHeaders: RowLayout {
+    Layout.fillWidth: true
+    Layout.bottomMargin: 2
+
+    Item { Layout.preferredWidth: 100 * Style.uiScaleRatio }
+
+    NText {
+      text: pluginApi?.tr("panel.dark")
+      color: Color.mOnSurfaceVariant
+      pointSize: 8
+      font.weight: Font.Medium
+      horizontalAlignment: Text.AlignHCenter
+      Layout.fillWidth: true
+    }
+
+    NText {
+      text: pluginApi?.tr("panel.light")
+      color: Color.mOnSurfaceVariant
+      pointSize: 8
+      font.weight: Font.Medium
+      horizontalAlignment: Text.AlignHCenter
+      Layout.fillWidth: true
+    }
+  }
+
+  // ── Helper: Color Swatch Row ──────────────────────────────────
+  component ColorSwatchRow: RowLayout {
+    property string label
+    property color darkColor: "#000000"
+    property color lightColor: "#000000"
+    property string targetKey
+
+    Layout.fillWidth: true
+    spacing: Style.marginXXS
+
+    NText {
+      text: label
+      color: Color.mOnSurface
+      pointSize: 7
+      Layout.preferredWidth: 100 * Style.uiScaleRatio
+      elide: Text.ElideRight
+    }
+
+    // Dark swatch
+    Item {
+      Layout.fillWidth: true
+      Layout.preferredHeight: 16
+
+      Rectangle {
+        anchors.centerIn: parent
+        width: 16; height: 16
+        radius: 3
+        color: darkColor
+        border.color: Color.mOutline
+        border.width: 1
+
+        MouseArea {
+          anchors.fill: parent
+          cursorShape: Qt.PointingHandCursor
+          onClicked: {
+            root.editingVariant = "dark";
+            root.pickerTargetKey = targetKey;
+            colorPicker.selectedColor = darkColor;
+            colorPicker.open();
+          }
+        }
+      }
+    }
+
+    // Light swatch
+    Item {
+      Layout.fillWidth: true
+      Layout.preferredHeight: 16
+
+      Rectangle {
+        anchors.centerIn: parent
+        width: 16; height: 16
+        radius: 3
+        color: lightColor
+        border.color: Color.mOutline
+        border.width: 1
+
+        MouseArea {
+          anchors.fill: parent
+          cursorShape: Qt.PointingHandCursor
+          onClicked: {
+            root.editingVariant = "light";
+            root.pickerTargetKey = targetKey;
+            colorPicker.selectedColor = lightColor;
+            colorPicker.open();
+          }
+        }
+      }
+    }
   }
 
   // ── Panel Container ───────────────────────────────────────────
@@ -574,10 +777,55 @@ Item {
         }
       }
 
-      // Color roles — two columns: Dark | Light
+      // ── Tab Bar ──────────────────────────────────────────────
       NBox {
         Layout.fillWidth: true
-        implicitHeight: colorList.implicitHeight + Style.marginM
+        implicitHeight: tabBarRow.implicitHeight + Style.marginS
+
+        RowLayout {
+          id: tabBarRow
+          anchors {
+            fill: parent
+            margins: Style.marginXS
+          }
+          spacing: 1
+
+          Repeater {
+            model: ["Color Roles", "Terminal", "Oh My Posh"]
+
+            Rectangle {
+              required property var modelData
+              required property int index
+              Layout.fillWidth: true
+              Layout.preferredHeight: 20
+              radius: 3
+              color: root.activeTab === index ? Color.mPrimary : "transparent"
+
+              NText {
+                anchors.centerIn: parent
+                text: modelData
+                pointSize: 7
+                font.weight: root.activeTab === index ? Font.Bold : Font.Normal
+                color: root.activeTab === index ? Color.mOnPrimary : Color.mOnSurfaceVariant
+              }
+
+              MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: root.activeTab = index
+              }
+            }
+          }
+        }
+      }
+
+      // ── Tab Content ──────────────────────────────────────────
+      // Color Roles Tab
+      NBox {
+        visible: root.activeTab === 0
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        implicitHeight: visible ? colorList.implicitHeight + Style.marginM : 0
 
         ColumnLayout {
           id: colorList
@@ -589,110 +837,28 @@ Item {
           }
           spacing: 2
 
-          // Column headers
-          RowLayout {
-            Layout.fillWidth: true
-            Layout.bottomMargin: 2
-
-            Item {
-              Layout.preferredWidth: 100 * Style.uiScaleRatio
-            }
-
-            NText {
-              text: pluginApi?.tr("panel.dark")
-              color: Color.mOnSurfaceVariant
-              pointSize: 8
-              font.weight: Font.Medium
-              horizontalAlignment: Text.AlignHCenter
-              Layout.fillWidth: true
-            }
-
-            NText {
-              text: pluginApi?.tr("panel.light")
-              color: Color.mOnSurfaceVariant
-              pointSize: 8
-              font.weight: Font.Medium
-              horizontalAlignment: Text.AlignHCenter
-              Layout.fillWidth: true
-            }
-          }
+          ColumnHeaders {}
 
           Repeater {
             model: root.colorRoles
 
-            RowLayout {
+            ColorSwatchRow {
               required property var modelData
-              Layout.fillWidth: true
-              spacing: Style.marginXXS
-
-              NText {
-                text: modelData.label
-                color: Color.mOnSurface
-                pointSize: 8
-                Layout.preferredWidth: 100 * Style.uiScaleRatio
-                elide: Text.ElideRight
-              }
-
-              // Dark swatch
-              Item {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 16
-
-                Rectangle {
-                  anchors.centerIn: parent
-                  width: 16; height: 16
-                  radius: 3
-                  color: root.editingScheme?.dark?.[modelData.key] ?? "#000000"
-                  border.color: Color.mOutline
-                  border.width: 1
-
-                  MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                      root.editingVariant = "dark";
-                      root.pickerTargetKey = modelData.key;
-                      colorPicker.selectedColor = root.editingScheme?.dark?.[modelData.key] ?? "#000000";
-                      colorPicker.open();
-                    }
-                  }
-                }
-              }
-
-              // Light swatch
-              Item {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 16
-
-                Rectangle {
-                  anchors.centerIn: parent
-                  width: 16; height: 16
-                  radius: 3
-                  color: root.editingScheme?.light?.[modelData.key] ?? "#000000"
-                  border.color: Color.mOutline
-                  border.width: 1
-
-                  MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                      root.editingVariant = "light";
-                      root.pickerTargetKey = modelData.key;
-                      colorPicker.selectedColor = root.editingScheme?.light?.[modelData.key] ?? "#000000";
-                      colorPicker.open();
-                    }
-                  }
-                }
-              }
+              label: modelData.label
+              darkColor: root.editingScheme?.dark?.[modelData.key] ?? "#000000"
+              lightColor: root.editingScheme?.light?.[modelData.key] ?? "#000000"
+              targetKey: modelData.key
             }
           }
         }
       }
 
-      // ── Terminal Colors ──
+      // Terminal Tab
       NBox {
+        visible: root.activeTab === 1
         Layout.fillWidth: true
-        implicitHeight: terminalList.implicitHeight + Style.marginM
+        Layout.fillHeight: true
+        implicitHeight: visible ? terminalList.implicitHeight + Style.marginM : 0
 
         ColumnLayout {
           id: terminalList
@@ -704,108 +870,68 @@ Item {
           }
           spacing: 2
 
-          NText {
-            text: "Terminal Colors"
-            color: Color.mOnSurfaceVariant
-            pointSize: Style.fontSizeXXS
-            font.weight: Font.Bold
-          }
+          SectionHeader { title: "Terminal Colors" }
 
-          // Column headers
-          RowLayout {
-            Layout.fillWidth: true
-            Layout.bottomMargin: 2
-
-            Item {
-              Layout.preferredWidth: 100 * Style.uiScaleRatio
-            }
-
-            NText {
-              text: pluginApi?.tr("panel.dark")
-              color: Color.mOnSurfaceVariant
-              pointSize: 8
-              font.weight: Font.Medium
-              horizontalAlignment: Text.AlignHCenter
-              Layout.fillWidth: true
-            }
-
-            NText {
-              text: pluginApi?.tr("panel.light")
-              color: Color.mOnSurfaceVariant
-              pointSize: 8
-              font.weight: Font.Medium
-              horizontalAlignment: Text.AlignHCenter
-              Layout.fillWidth: true
-            }
-          }
+          ColumnHeaders {}
 
           Repeater {
             model: root.terminalColorRoles
 
-            RowLayout {
+            ColorSwatchRow {
               required property var modelData
-              Layout.fillWidth: true
-              spacing: Style.marginXXS
+              label: modelData.label
+              darkColor: root.getTerminalAt(root.editingScheme?.dark ?? {}, modelData.path)
+              lightColor: root.getTerminalAt(root.editingScheme?.light ?? {}, modelData.path)
+              targetKey: "terminal:" + modelData.path.join(".")
+            }
+          }
+        }
+      }
 
-              NText {
-                text: modelData.label
-                color: Color.mOnSurface
-                pointSize: 7
-                Layout.preferredWidth: 100 * Style.uiScaleRatio
-                elide: Text.ElideRight
-              }
+      // Oh My Posh Tab
+      NBox {
+        visible: root.activeTab === 2
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        implicitHeight: visible ? ompList.implicitHeight + Style.marginM : 0
 
-              // Dark swatch
-              Item {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 16
+        ColumnLayout {
+          id: ompList
+          anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            margins: Style.marginXS
+          }
+          spacing: 2
 
-                Rectangle {
-                  anchors.centerIn: parent
-                  width: 16; height: 16
-                  radius: 3
-                  color: root.getTerminalAt(root.editingScheme?.dark ?? {}, modelData.path)
-                  border.color: Color.mOutline
-                  border.width: 1
+          RowLayout {
+            Layout.fillWidth: true
 
-                  MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                      root.editingVariant = "dark";
-                      root.pickerTargetKey = "terminal:" + modelData.path.join(".");
-                      colorPicker.selectedColor = root.getTerminalAt(root.editingScheme?.dark ?? {}, modelData.path);
-                      colorPicker.open();
-                    }
-                  }
-                }
-              }
+            SectionHeader { title: "Oh My Posh Colors" }
 
-              // Light swatch
-              Item {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 16
+            Item { Layout.fillWidth: true }
 
-                Rectangle {
-                  anchors.centerIn: parent
-                  width: 16; height: 16
-                  radius: 3
-                  color: root.getTerminalAt(root.editingScheme?.light ?? {}, modelData.path)
-                  border.color: Color.mOutline
-                  border.width: 1
+            NButton {
+              text: "Reset"
+              outlined: true
+              implicitHeight: 16
+              implicitWidth: 40
+              onClicked: root.resetOmpColors()
+            }
+          }
 
-                  MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                      root.editingVariant = "light";
-                      root.pickerTargetKey = "terminal:" + modelData.path.join(".");
-                      colorPicker.selectedColor = root.getTerminalAt(root.editingScheme?.light ?? {}, modelData.path);
-                      colorPicker.open();
-                    }
-                  }
-                }
-              }
+          ColumnHeaders {}
+
+          Repeater {
+            model: root.ompColorRoles
+
+            ColorSwatchRow {
+              required property var modelData
+              label: modelData.label
+              darkColor: root.getOmpColor(root.editingScheme?.dark ?? {}, modelData.key)
+              lightColor: root.getOmpColor(root.editingScheme?.light ?? {}, modelData.key)
+              targetKey: "omp:" + modelData.key
             }
           }
         }
