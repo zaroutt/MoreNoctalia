@@ -8,6 +8,33 @@ workspace "2"
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://niri-wm.github.io/niri/Configuration:-Input
+	
+  layer-rule {
+ match namespace="^noctalia-.*$"
+  background-effect {
+   blur false
+    }
+}
+
+	
+
+  layer-rule {
+ match namespace="^noctalia-bar-clock_bar"
+  background-effect {
+	  liquid-glass {
+            refraction-strength 1
+	    glow-weight 1
+	    power-factor 1
+
+        }
+   blur true
+   xray true
+    }
+}
+   
+ 
+  
+
 input {
     keyboard {
         xkb 
@@ -17,7 +44,7 @@ input {
         numlock
     }
 
-    // Next sections include libinput settings.
+    // Next sections ngs.
     // Omitting settings disables them, or leaves them at their default values.
     // All commented-out settings here are examples, not defaults.
     touchpad {
@@ -28,7 +55,7 @@ input {
         // drag false
         // drag-lock
         natural-scroll
-        // accel-speed 0.2
+      // accel-speed 0.2
         // accel-profile "flat"
         // scroll-method "two-finger"
         // disabled-on-external-mouse
@@ -89,8 +116,9 @@ input {
 // Find more information on the wiki:
 // https://niri-wm.github.io/niri/Configuration:-Layout
 layout {
+	background-color "transparent"
     // Set gaps around windows in logical pixels.
-    gaps 34
+    gaps 30
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -106,8 +134,8 @@ layout {
         // For example, you can perfectly fit four windows sized "proportion 0.25" on an output.
         // The default preset widths are 1/3, 1/2 and 2/3 of the output.
         proportion 0.333
-        proportion 0.55
-        proportion 0.367
+        proportion 0.35
+        proportion 0.5
 
         // Fixed sets the width in logical pixels exactly.
         // fixed 1920
@@ -137,16 +165,14 @@ layout {
     off
         width 2
 
-        active-color "#000000"
+        active-color "#ebdbb2"
     }
 
     // You can enable drop shadows for windows.
     shadow {
+        off
 
-        on
-
-        // By default, the shadow draws only around its window, and not behind it.
-        // Uncomment this setting to make the shadow draw behind its window.
+                // Uncomment this setting to make the shadow draw behind its window.
         //
         // Note that niri has no way of knowing about the CSD window corner
         // radius. It has to assume that windows have square corners, leading to
@@ -188,9 +214,9 @@ layout {
     border {
         off
 
-        width 2
-        active-color "#000000"
-        inactive-color "#000000"
+        width 3
+        active-color "#8ec07c"
+        inactive-color "#2a3925"
     }
 }
 
@@ -200,10 +226,11 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "env" "QT_QPA_PLATFORMTHEME=gtk3" "qs" "-c" "noctalia-shell"
-spawn-at-startup "qs" "-c" "noctalia-shell" "ipc call launcher toggle"
-spawn-at-startup "qs" "-c" "noctalia-shell" "ipc call launcher toggle"
-/- spawn-at-startup "qs" "-c" "noctalia-shell"
+//spawn-at-startup "env" "QT_QPA_PLATFORMTHEME=gtk3" "qs" "-c" "noctalia-shell"
+//spawn-at-startup "qs" "-c" "noctalia-shell" "ipc call launcher toggle"
+//spawn-at-startup "qs" "-c" "noctalia-shell" "ipc call launcher toggle"
+//- spawn-at-startup "qs" "-c" "noctalia-shell"
+spawn-at-startup "noctalia"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -231,19 +258,157 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 // The wiki explains how to configure individual animations:
 // https://niri-wm.github.io/niri/Configuration:-Animations
 animations {
-    workspace-switch {
-        spring damping-ratio=0.8 stiffness=523 epsilon=0.0001
-    }
+    // Uncomment while tuning.
+    slowdown 1.5
+
+
     window-open {
-        duration-ms 1000
-        curve "ease-out-expo"
-        custom-shader "vec4 fall_from_top(vec3 coords_geo, vec3 size_geo) {\n            float progress = niri_clamped_progress * niri_clamped_progress;\n            vec2 coords = (coords_geo.xy - vec2(0.5, 0.0)) * size_geo.xy;\n            coords.y += (1.0 - progress) * 1440.0;\n            float max_angle = mix(-0.5, 0.5, floor(niri_random_seed * 4.0) / 3.0);\n            float angle = (1.0 - progress) * max_angle;\n            mat2 rotate = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));\n            coords = rotate * coords;\n            coords_geo = vec3(coords / size_geo.xy + vec2(0.5, 0.0), 1.0);\n            vec3 coords_tex = niri_geo_to_tex * coords_geo;\n            return texture2D(niri_tex, coords_tex.st);\n        }\n        vec4 open_color(vec3 coords_geo, vec3 size_geo) {\n            return fall_from_top(coords_geo, size_geo);\n        }"
+        duration-ms 260
+        // close to a polished macOS-style ease-out feel
+        curve "cubic-bezier" 0.25 0.1 0.25 1.0
+
+        custom-shader r"
+            vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+                float p = niri_clamped_progress;
+
+                // Slight up-to-down settle.
+                float slide_px = (1.0 - p) * 60.0;
+                float slide_geo = slide_px / max(size_geo.x, 1.0);
+
+                // Very subtle scale-up into place.
+                float scale = 0.985 + 0.015 * p;
+
+                vec2 uv = coords_geo.xy;
+                uv -= vec2(0.5, 0.5);
+                uv /= scale;
+                uv += vec2(0.5, 0.5);
+
+                uv.y -= slide_geo;
+
+                vec3 coords_tex = niri_geo_to_tex * vec3(uv, 1.0);
+                vec4 color = texture2D(niri_tex, coords_tex.st);
+
+                // Gentle fade-in.
+                color *= p;
+
+                return color;
+            }
+        "
     }
 
     window-close {
-        duration-ms 1000
-        curve "linear"
-        custom-shader "vec4 fall_to_bottom(vec3 coords_geo, vec3 size_geo) {\n            float progress = niri_clamped_progress * niri_clamped_progress;\n            vec2 coords = (coords_geo.xy - vec2(0.5, 0.0)) * size_geo.xy;\n            coords.y -= progress * 1440.0;\n            float max_angle = mix(-0.5, 0.5, floor(niri_random_seed * 4.0) / 3.0);\n            float angle = progress * max_angle;\n            mat2 rotate = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));\n            coords = rotate * coords;\n            coords_geo = vec3(coords / size_geo.xy + vec2(0.5, 0.0), 1.0);\n            vec3 coords_tex = niri_geo_to_tex * coords_geo;\n            return texture2D(niri_tex, coords_tex.st);\n        }\n        vec4 close_color(vec3 coords_geo, vec3 size_geo) {\n            return fall_to_bottom(coords_geo, size_geo);\n        }"
+        duration-ms 180
+        // quick, clean exit
+        curve "cubic-bezier" 0.32 0.0 0.67 0.0
+
+        custom-shader r"
+            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+                float p = niri_clamped_progress;
+                float inv = 1.0 - p;
+
+                // Slight downward departure.
+                float slide_px = p * 40.0;
+                float slide_geo = slide_px / max(size_geo.x, 1.0);
+
+                // Tiny scale-down on exit.
+                float scale = 1.0 - 0.012 * p;
+
+                vec2 uv = coords_geo.xy;
+                uv -= vec2(0.5, 0.5);
+                uv /= scale;
+                uv += vec2(0.5, 0.5);
+
+                uv.y -= slide_geo;
+
+                vec3 coords_tex = niri_geo_to_tex * vec3(uv, 1.0);
+                vec4 color = texture2D(niri_tex, coords_tex.st);
+
+                color *= inv;
+                return color;
+            }
+        "
+    }
+
+    window-resize {
+        // Resizes should feel soft but controlled.
+        spring damping-ratio=1.0 stiffness=720 epsilon=0.0001
+
+        custom-shader r"
+            vec4 resize_color(vec3 coords_curr_geo, vec3 size_curr_geo) {
+                // Show the next texture, but with a very mild softening
+                // toward the edges during motion for a less harsh resize feel.
+                vec3 coords_tex_next = niri_geo_to_tex_next * coords_curr_geo;
+                vec4 color = texture2D(niri_tex_next, coords_tex_next.st);
+
+                vec2 uv = coords_curr_geo.xy;
+                float edge =
+                    min(min(uv.x, 1.0 - uv.x), min(uv.y, 1.0 - uv.y));
+
+                float vignette = smoothstep(0.0, 0.06, edge);
+                color.rgb *= mix(0.985, 1.0, vignette);
+
+                return color;
+            }
+        "
+    }
+
+// ***animations below do not use a shaders ***
+// these are not required
+
+
+    workspace-switch {
+ curve "cubic-bezier" 0.25 0.1 0.25 1.0 ;
+
+
+
+
+
+
+
+
+        duration-ms 300
+    }
+    
+    horizontal-view-movement {
+ curve "cubic-bezier" 0.25 0.1 0.25 1.0 ;
+
+
+
+
+
+
+
+
+        duration-ms 300
+    }
+
+    window-movement {
+        // Individual windows shift with a slightly tighter response
+        // than the camera, so it feels organized.
+        spring damping-ratio=1.0 stiffness=700 epsilon=0.0001
+    }
+
+    config-notification-open-close {
+        // Less playful, more refined than the default underdamped feel.
+        spring damping-ratio=1.0 stiffness=820 epsilon=0.001
+    }
+
+    exit-confirmation-open-close {
+        spring damping-ratio=1.0 stiffness=560 epsilon=0.01
+    }
+
+    screenshot-ui-open {
+        duration-ms 220
+        curve "cubic-bezier" 0.22 1.0 0.36 1.0
+    }
+
+    overview-open-close {
+        // Overview should feel smooth and premium, not springy/bouncy.
+        spring damping-ratio=1.0 stiffness=620 epsilon=0.0001
+    }
+
+    recent-windows-close {
+        spring damping-ratio=1.0 stiffness=680 epsilon=0.001
     }
 }
 // Window rules let you adjust behavior for individual windows.
@@ -280,300 +445,15 @@ window-rule {
 }
 
 binds {
-    // Keys consist of modifiers separated by + signs, followed by an XKB key name
-    // in the end. To find an XKB name for a particular key, you may use a program
-    // like wev.
-    //
-    // "Mod" is a special modifier equal to Super when running on a TTY, and to Alt
-    // when running as a winit window.
-    //
-    // Most actions that you can bind here can also be invoked programmatically with
-    // `niri msg action do-something`.
-
-    // Mod-Shift-/, which is usually the same as Mod-?,
-    // shows a list of important hotkeys.
-    
-
-    // Suggested binds for running programs: terminal, app launcher, screen locker.
-    
     
     
 
-    // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
-    // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
-    // For example, this is a standard bind to toggle the screen reader (orca).
+      Shift+D { spawn-sh "noctalia msg panel-toggle launcher"; }
     
-
-    // Example volume keys mappings for PipeWire & WirePlumber.
-    // The allow-when-locked=true property makes them work even when the session is locked.
-    // Using spawn-sh allows to pass multiple arguments together with the command.
-    // "-l 1.0" limits the volume to 100%.
-    
-    
+       
     
     
 
-    // Example media keys mapping using playerctl.
-    // This will work with any MPRIS-enabled media player.
-    
-    
-    
-    
-    
-
-    // Example brightness key mappings for brightnessctl.
-    // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
-    // but you need to manually put each argument in separate "" quotes.
-    
-    
-
-    // Open/close the Overview: a zoomed-out view of workspaces and windows.
-    // You can also move the mouse into the top-left hot corner,
-    // or do a four-finger swipe up on a touchpad.
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-
-   
-    
-    
-    
-    
-    
-    
-    
-
-    // Alternative commands that move across workspaces when reaching
-    // the first or last window in a column.
-    // Mod+J     { focus-window-or-workspace-down; }
-    // Mod+K     { focus-window-or-workspace-up; }
-    // Mod+Ctrl+J     { move-window-down-or-to-workspace-down; }
-    // Mod+Ctrl+K     { move-window-up-or-to-workspace-up; }
-
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-   
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
-    // ...
-
-    // And you can also move a whole workspace to another monitor:
-    // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
-    // ...
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
-    // ...
-
-    
-    
-    
-    
-
-    // You can bind mouse wheel scroll ticks using the following syntax.
-    // These binds will change direction based on the natural-scroll setting.
-    //
-    // To avoid scrolling through workspaces really fast, you can use
-    // the cooldown-ms property. The bind will be rate-limited to this value.
-    // You can set a cooldown on any bind, but it's most useful for the wheel.
-    
-    
-    
-    
-
-    
-    
-    
-    
-
-    // Usually scrolling up and down with Shift in applications results in
-    // horizontal scrolling; these binds replicate that.
-    
-    
-    
-    
-
-    // Similarly, you can bind touchpad scroll "ticks".
-    // Touchpad scrolling is continuous, so for these binds it is split into
-    // discrete intervals.
-    // These binds are also affected by touchpad's natural-scroll, so these
-    // example binds are "inverted", since we have natural-scroll enabled for
-    // touchpads by default.
-    // Mod+TouchpadScrollDown { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02+"; }
-    // Mod+TouchpadScrollUp   { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02-"; }
-
-    // You can refer to workspaces by index. However, keep in mind that
-    // niri is a dynamic workspace system, so these commands are kind of
-    // "best effort". Trying to refer to a workspace index bigger than
-    // the current workspace count will instead refer to the bottommost
-    // (empty) workspace.
-    //
-    // For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
-    // will all refer to the 3rd workspace.
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Ctrl+1 { move-window-to-workspace 1; }
-
-    // Switches focus between the current and the previous workspace.
-    // Mod+Tab { focus-workspace-previous; }
-
-    // The following binds move the focused window in and out of a column.
-    // If the window is alone, they will consume it into the nearby column to the side.
-    // If the window is already in a column, they will expel it out.
-    
-    
-
-    // Consume one window from the right to the bottom of the focused column.
-    
-    // Expel the bottom window from the focused column to the right.
-    
-
-    // Cycle through widths set in preset-column-widths.
-    
-    // Cycling through the presets in reverse order is also possible.
-    
-
-    
-    
-
-    
-    
-
-    // While maximize-column leaves gaps and borders around the window,
-    // maximize-window-to-edges doesn't: the window expands to the edges of the screen.
-    // This bind corresponds to normal window maximizing,
-    // e.g. by double-clicking on the titlebar.
-    
-
-    // Expand the focused column to space not taken up by other fully visible columns.
-    // Makes the column "fill the rest of the space".
-    
-
-    
-
-    // Center all fully visible columns on screen.
-    
-
-    // Finer width adjustments.
-    // This command can also:
-    // * set width in pixels: "1000"
-    // * adjust width in pixels: "-5" or "+5"
-    // * set width as a percentage of screen width: "25%"
-    // * adjust width as a percentage of screen width: "-10%" or "+10%"
-    // Pixel sizes use logical, or scaled, pixels. I.e. on an output with scale 2.0,
-    // set-column-width "100" will make the column occupy 200 physical screen pixels.
-    
-    
-
-    // Finer height adjustments when in column with other windows.
-    
-    
-
-    // Move the focused window between the floating and the tiling layout.
-    
-    
-
-    // Toggle tabbed column display mode.
-    // Windows in this column will appear as vertical tabs,
-    // rather than stacked on top of each other.
-    
-
-    // Actions to switch layouts.
-    // Note: if you uncomment these, make sure you do NOT have
-    // a matching layout switch hotkey configured in xkb options above.
-    // Having both at once on the same hotkey will break the switching,
-    // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    // Mod+Space       { switch-layout "next"; }
-    // Mod+Shift+Space { switch-layout "prev"; }
-
-    
-    
-    
-
-    // Applications such as remote-desktop clients and software KVM switches may
-    // request that niri stops processing the keyboard shortcuts defined here
-    // so they may, for example, forward the key presses as-is to a remote machine.
-    // It's a good idea to bind an escape hatch to toggle the inhibitor,
-    // so a buggy application can't hold your session hostage.
-    //
-    // The allow-inhibiting=false property can be applied to other binds as well,
-    // which ensures niri always processes them, even when an inhibitor is active.
-    
-
-    // The quit action will show a confirmation dialog to avoid accidental exits.
-    
-    
-
-// Powers off the monitors. To turn them back on, do any input like
-    // moving the mouse or pressing any other key.
-    
-    // Keys consist of modifiers separated by + signs, followed by an XKB key name
-    // in the end. To find an XKB name for a particular key, you may use a program
-    // like wev.
-    //
-    // "Mod" is a special modifier equal to Super when running on a TTY, and to Alt
-    // when running as a winit window.
-    //
-    // Most actions that you can bind here can also be invoked programmatically with
-    // `niri msg action do-something`.
-
-    // Mod-Shift-/, which is usually the same as Mod-?,
     // shows a list of important hotkeys.
     Mod+Shift+Slash { show-hotkey-overlay; }
 
@@ -581,7 +461,7 @@ binds {
     Shift+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "kitty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-    Shift+D { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
+ //   Shift+D { spawn-sh "noctalia ipc call launcher toggle"; }
    Mod+B { spawn-sh "qs -c noctalia-shell ipc call launcher clipboard"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
@@ -849,7 +729,9 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 environment {
-	QT_QPA_PLATFORMTHEME "qt6ct"
+	
+	QT_QPA_PLATFORM "wayland"
+  QT_QPA_PLATFORMTHEME "gtk3"
 }
 output "DP-1" {
     mode "1920x1080@164.599"
@@ -861,28 +743,30 @@ output "DP-1" {
 }
 prefer-no-csd
 
+
 window-rule {
-    geometry-corner-radius 14 ;
-
-
-
-
-
-    clip-to-geometry true ;
-
-
-
-
-
+    geometry-corner-radius 15
+    clip-to-geometry true
     draw-border-with-background false
     background-effect {
         blur true
-
-
-
-
-
         xray true
+        liquid-glass {
+            refraction-strength 10
+            power-factor 10
+            refraction-power 1
+            glow-weight 0.00
+            edge-lighting 0.4
+            saturation 0.9
+            vibrancy 0
+            adaptive-dim 0.25
+            adaptive-boost 0.25
+            physical-refraction 0
+            lens-distortion 0
+            fringing 0
+	    refraction-dilute 0
+
+        }
     }
 }
 
@@ -893,9 +777,25 @@ window-rule { match app-id=r"kitty" title=r"~ - fish"; opacity 1.0; }
 window-rule { match app-id=r"Spotify"; open-maximized true; open-on-workspace "spotify"; }
 
 blur {
-    on
-    noise 0
-
-    saturation 1
-
+    on 
+    passes 4
+    offset 4
+    noise 0.0
 }
+
+layer-rule {
+    place-within-backdrop true
+}
+
+
+ overview {
+    workspace-shadow {
+        off
+    }
+}
+
+
+
+
+
+include "noctalia.kdl"
