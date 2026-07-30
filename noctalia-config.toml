@@ -1,0 +1,727 @@
+[backdrop]
+blur_intensity = 0.40999999083578587
+tint_intensity = 0.0
+
+[bar]
+order = [ "spaced_1" ]
+
+    [bar.spaced_1]
+    background_opacity = 0.69999998435378075
+    border = "primary"
+    capsule = true
+    capsule_padding = 14.0
+    capsule_radius = 3
+    capsule_thickness = 0.69999998807907104
+    center = [ "group:g5" ]
+    end = [ "group:g3", "group:g4" ]
+    font_weight = 400
+    margin_ends = 0
+    padding = 29
+    panel_overlap = 0
+    radius = 0
+    radius_bottom_left = 0
+    radius_bottom_right = 0
+    scale = 1.1500000096857548
+    shadow = false
+    show_on_workspace_switch = false
+    start = [ "group:g1", "group:g11" ]
+    thickness = 42
+    widget_spacing = 10
+
+        [[bar.spaced_1.capsule_group]]
+        enabled = true
+        fill = "surface_variant"
+        id = "g2"
+        members = [ "wallpaper", "bluetooth", "settings", "volume", "clipboard", "session" ]
+        opacity = 1.0
+        padding = 11.0
+        radius = 4.0
+
+        [[bar.spaced_1.capsule_group]]
+        border = ""
+        enabled = false
+        fill = "surface_variant"
+        foreground = "primary"
+        id = "g11"
+        members = [ "spacer_1", "screenshot", "spacer_1" ]
+        opacity = 0.0
+        padding = 6.0
+        radius = 80.0
+
+        [[bar.spaced_1.capsule_group]]
+        enabled = true
+        fill = "surface_variant"
+        foreground = "on_surface"
+        id = "g3"
+        members = [
+            "volume",
+            "spacer_11",
+            "mpvpaper",
+            "spacer_10",
+            "notes_3",
+            "spacer_9",
+            "todo",
+            "spacer_8",
+            "clipboard",
+            "spacer_6",
+            "wallpaper",
+            "spacer_5",
+            "recorder_4"
+        ]
+        opacity = 0.0
+        padding = 17.0
+        radius = 5.0
+
+        [[bar.spaced_1.capsule_group]]
+        enabled = true
+        fill = "surface_variant"
+        foreground = "primary"
+        id = "g5"
+        members = [ "control-center" ]
+        opacity = 0.0
+        padding = 17.0
+        radius = 5.0
+
+        [[bar.spaced_1.capsule_group]]
+        enabled = true
+        fill = "surface_variant"
+        foreground = "primary"
+        id = "g4"
+        members = [ "weather", "date" ]
+        opacity = 0.0
+        padding = 17.0
+        radius = 3.0
+
+        [[bar.spaced_1.capsule_group]]
+        enabled = true
+        fill = "surface_variant"
+        foreground = "on_surface_variant"
+        id = "g1"
+        members = [ "temp", "ram", "cpu", "spacer_1", "media", "spacer_1", "shelly", "spacer_1" ]
+        opacity = 0.0
+        padding = 14.0
+        radius = 3.0
+
+[control_center]
+sidebar = "none"
+sidebar_section = "none"
+
+    [[control_center.shortcuts]]
+    type = "wifi"
+
+    [[control_center.shortcuts]]
+    type = "caffeine"
+
+    [[control_center.shortcuts]]
+    type = "nightlight"
+
+    [[control_center.shortcuts]]
+    type = "notification"
+
+    [[control_center.shortcuts]]
+    type = "power_profile"
+
+    [[control_center.shortcuts]]
+    type = "keyboard_layout"
+
+[desktop_widgets]
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[dock]
+auto_hide = true
+background_opacity = 0.99999997764825821
+cross_axis_padding = 0
+icon_size = 40
+inactive_opacity = 0.99999997764825821
+main_axis_padding = 7
+margin_ends = 82
+pinned = [ "zen", "spotify", "org.gnome.Nautilus", "kitty", "com.stremio.stremio", "io.github.nirimod" ]
+shadow = false
+show_dots = true
+
+[keybinds]
+validate = [ "Return", "KP_Enter", "space" ]
+
+[location]
+auto_locate = true
+
+[lockscreen]
+blur_intensity = 0.0
+
+[lockscreen_widgets]
+enabled = true
+schema_version = 2
+widget_order = [ "lockscreen-login-box@winit", "lockscreen-login-box@DP-1", "lockscreen-widget-0000000000000001" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
+    box_height = 240.0
+    box_width = 752.0
+    cx = 976.0
+    cy = 580.0
+    output = "DP-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-1".settings]
+        center_password_text = false
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_session_buttons = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@winit"]
+    box_height = 201.0
+    box_width = 720.0
+    cx = 921.0
+    cy = 777.0
+    output = "winit"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@winit".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_session_buttons = true
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+    box_height = 160.0
+    box_width = 1920.0
+    cx = 960.0
+    cy = 1068.0
+    output = "DP-1"
+    rotation = 0.0
+    type = "audio_visualizer"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000001.settings]
+        background_opacity = 0.0
+        bands = 32
+        show_when_idle = true
+
+[nightlight]
+enabled = true
+
+[osd]
+background_opacity = 0.0
+
+[plugin_settings."noctalia/mpvpaper"]
+video_directory = "/home/za/Downloads"
+
+[plugin_settings."noctalia/screen_recorder"]
+frame_rate = 165
+quality = "ultra"
+
+[plugins]
+enabled = [
+    "noctalia/screen_recorder",
+    "noctalia/timer",
+    "noctalia/translator",
+    "noctalia/mpvpaper",
+    "noctalia/notes",
+    "nightwatch75/todo",
+    "joshuaslate/shelly",
+    "noctalia/wallhaven",
+    "gustav0ar/drive-health",
+    "nzlov/daily-wallpaper",
+    "jinliu/imagemagick-clock"
+]
+
+[shell]
+corner_radius_scale = 1.0500000156462193
+font_family = "Roboto"
+telemetry_enabled = false
+
+    [shell.animation]
+    speed = 0.65000000968575478
+
+    [shell.launcher]
+    categories = false
+
+    [shell.panel]
+    borders = false
+    clipboard_placement = "attached"
+    clipboard_position = "auto"
+    floating_offset = 6
+    open_near_click_control_center = true
+    polkit_placement = "attached"
+    session_position = "center"
+    wallpaper_position = "center"
+
+    [shell.screen_corners]
+    size = 64
+
+    [shell.shadow]
+    alpha = 0.99999997764825821
+    direction = "center"
+
+[theme]
+builtin = "Ayu"
+community_palette = "Vesper"
+custom_palette = "wallhaven-d8ojrl-1920x1080-vib"
+mode = "dark"
+source = "community"
+wallpaper_scheme = "m3-fruit-salad"
+
+    [theme.templates]
+    builtin_ids = [ "alacritty", "btop", "cava", "gtk3", "gtk4", "ghostty", "kitty", "starship", "sway" ]
+    community_ids = [ "spicetify", "pywalfox-beta4", "neovim", "vscode", "obs", "opencode", "papirus-icons" ]
+
+[wallpaper]
+directory = "/home/za/Pictures/Wallpapers"
+
+    [wallpaper.default]
+    path = "/home/za/Pictures/Wallpapers/wallhaven-g79127_1920x1080.png"
+
+    [wallpaper.last]
+    path = "/home/za/Pictures/Wallpapers/wallhaven-g79127_1920x1080.png"
+
+    [wallpaper.monitors.DP-1]
+    path = "/home/za/Pictures/Wallpapers/wallhaven-g79127_1920x1080.png"
+
+    [wallpaper.monitors.winit]
+    path = "/home/za/Pictures/Wallpapers/daily-wallpaper/bing-en-us-2026-07-30.jpg"
+
+    [[wallpaper.favorite]]
+    palette_source = "wallpaper"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-k82kp1_1920x1080.png"
+    theme_mode = "dark"
+    wallpaper_scheme = "vibrant"
+
+    [[wallpaper.favorite]]
+    community_palette = "GruvboxAlt"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-5ymlv9_3840x2160.png"
+    theme_mode = "dark"
+
+    [[wallpaper.favorite]]
+    palette_source = "wallpaper"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-lyj6xq_3840x2160.png"
+    theme_mode = "dark"
+    wallpaper_scheme = "faithful"
+
+    [[wallpaper.favorite]]
+    palette_source = "wallpaper"
+    path = "/home/za/Pictures/Wallpapers/Tranquility.png"
+    theme_mode = "dark"
+    wallpaper_scheme = "vibrant"
+
+    [[wallpaper.favorite]]
+    community_palette = "GruvboxAlt"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-5y3l75_3840x2160.png"
+    theme_mode = "dark"
+
+    [[wallpaper.favorite]]
+    community_palette = "Vesper"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-ly2l2p_3840x2160.png"
+    theme_mode = "dark"
+
+    [[wallpaper.favorite]]
+    community_palette = "Oxocarbon"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-qrmykq_3840x2160.png"
+    theme_mode = "dark"
+
+    [[wallpaper.favorite]]
+    community_palette = "Oxocarbon"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-w5dp5q_3840x2160.png"
+    theme_mode = "dark"
+
+    [[wallpaper.favorite]]
+    community_palette = "Vesper"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-og6rql_1920x1080.png"
+    theme_mode = "dark"
+
+    [[wallpaper.favorite]]
+    community_palette = "Vesper"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-lyjdxr_1920x1080.png"
+    theme_mode = "dark"
+
+    [[wallpaper.favorite]]
+    community_palette = "GruvboxAlt"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-1qggw9_3840x2160.png"
+    theme_mode = "dark"
+
+    [[wallpaper.favorite]]
+    community_palette = "Peche"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-5ymy57_3840x2160.png"
+    theme_mode = "dark"
+
+    [[wallpaper.favorite]]
+    community_palette = "Monochrome"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-yq2zwl_3840x2160.png"
+    theme_mode = "dark"
+
+    [[wallpaper.favorite]]
+    community_palette = "Catppuccin Mocha Pink"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/motorcycle.jpg"
+    theme_mode = "dark"
+
+    [[wallpaper.favorite]]
+    community_palette = "Garnet"
+    palette_source = "community"
+    path = "/home/za/Pictures/Wallpapers/wallhaven-d8ojrl_1920x1080.png"
+    theme_mode = "dark"
+
+[widget.bluetooth]
+enabled = true
+
+[widget.brightness]
+capsule_opacity = 0.51000000000000001
+capsule_padding = 27
+scale = 0.90000000000000002
+
+[widget.caffeine]
+icon_color = "surface_variant"
+
+[widget.clipboard]
+capsule = true
+scale = 0.80000000000000004
+
+[widget.clock]
+capsule = true
+capsule_fill = "surface_variant"
+capsule_foreground = "primary"
+capsule_padding = 12
+capsule_radius = 18
+color = "on_surface"
+font_family = "Roboto"
+
+[widget.control-center]
+anchor = true
+capsule = true
+capsule_fill = "surface_variant"
+capsule_foreground = "surface_variant"
+capsule_padding = 3
+capsule_radius = 4
+color = "on_surface"
+custom_image = "/usr/share/icons/cachyos.svg"
+custom_image_colorize = true
+icon_color = "on_surface"
+scale = 1.8
+
+[widget.cpu]
+capsule = true
+capsule_border = "primary"
+capsule_fill = "on_surface"
+capsule_radius = "auto"
+color = "on_surface"
+display = "text"
+font_family = "Roboto"
+highlight_color = "on_surface"
+icon_color = "primary"
+scale = 0.80000000000000004
+show_label = false
+
+[widget.custom_button_2]
+type = "custom_button"
+
+[widget.date]
+capsule = true
+capsule_fill = "surface_variant"
+capsule_opacity = 0.0
+capsule_padding = 5
+capsule_radius = 5
+color = "on_surface"
+font_family = "Roboto"
+format = "{:%H:%M\\n%x}"
+scale = 1.2000000000000002
+
+[widget.media]
+anchor = true
+art_size = 25
+capsule = true
+capsule_opacity = 0.0
+capsule_padding = 13
+color = "on_surface"
+enabled = true
+font_family = "Roboto"
+hide_artist = true
+hide_when_no_media = true
+icon_color = "on_surface"
+max_length = 137
+min_length = 0
+scale = 0.85000000000000009
+title_scroll = "on_hover"
+
+[widget.mpvpaper]
+icon_color = "primary"
+scale = 0.80000000000000004
+type = "noctalia/mpvpaper:mpvpaper"
+
+[widget.mpvpaper_2]
+type = "noctalia/mpvpaper:mpvpaper"
+
+[widget.mpvpaper_3]
+type = "noctalia/mpvpaper:mpvpaper"
+
+[widget.notes]
+type = "noctalia/notes:notes"
+
+[widget.notes_2]
+type = "noctalia/notes:notes"
+
+[widget.notes_3]
+capsule = true
+scale = 0.80000000000000004
+type = "noctalia/notes:notes"
+
+[widget.notes_4]
+type = "noctalia/notes:notes"
+
+[widget.notes_5]
+type = "noctalia/notes:notes"
+
+[widget.notes_6]
+capsule = true
+capsule_radius = "auto"
+scale = 1.1000000000000001
+type = "noctalia/notes:notes"
+
+[widget.ram]
+color = "on_surface"
+display = "text"
+font_family = "Roboto"
+highlight_color = "on_surface"
+icon_color = "primary"
+scale = 0.80000000000000004
+show_label = false
+
+[widget.recorder]
+type = "noctalia/screen_recorder:recorder"
+
+[widget.recorder_2]
+type = "noctalia/screen_recorder:recorder"
+
+[widget.recorder_3]
+capsule_padding = 9
+type = "noctalia/screen_recorder:recorder"
+
+[widget.recorder_4]
+capsule = true
+capsule_padding = 8
+scale = 0.80000000000000004
+type = "noctalia/screen_recorder:recorder"
+
+[widget.recorder_5]
+type = "noctalia/screen_recorder:recorder"
+
+[widget.recorder_6]
+type = "noctalia/screen_recorder:recorder"
+
+[widget.recorder_7]
+capsule = true
+capsule_opacity = 0.0
+type = "noctalia/screen_recorder:recorder"
+
+[widget.session]
+anchor = true
+color = "primary"
+
+[widget.settings]
+anchor = true
+capsule = true
+capsule_foreground = "primary"
+capsule_padding = 15
+capsule_radius = "auto"
+custom_image = "/home/za/Downloads/arch.png"
+custom_image_colorize = true
+
+[widget.shelly]
+capsule = true
+capsule_foreground = "primary"
+capsule_padding = 7
+capsule_radius = "auto"
+font_family = "Roboto"
+font_weight = 500
+glyph_color = "primary"
+scale = 0.80000000000000004
+type = "joshuaslate/shelly:shelly"
+
+[widget.shelly_2]
+capsule = true
+capsule_fill = "surface_variant"
+color = "primary"
+glyph_color = "on_primary"
+scale = 0.85000000000000009
+type = "joshuaslate/shelly:shelly"
+
+[widget.shelly_3]
+type = "joshuaslate/shelly:shelly"
+
+[widget.spacer_1]
+type = "spacer"
+
+[widget.spacer_10]
+type = "spacer"
+
+[widget.spacer_11]
+type = "spacer"
+
+[widget.spacer_2]
+type = "spacer"
+
+[widget.spacer_3]
+type = "spacer"
+
+[widget.spacer_5]
+type = "spacer"
+
+[widget.spacer_6]
+type = "spacer"
+
+[widget.spacer_8]
+type = "spacer"
+
+[widget.spacer_9]
+type = "spacer"
+
+[widget.sysmon]
+capsule_border = "secondary"
+color = "primary"
+display = "text"
+glyph = "backslash"
+icon_color = "surface_variant"
+scale = 0.85000000000000009
+show_label = false
+stat = "gpu_usage"
+
+[widget.taskbar]
+capsule = true
+capsule_fill = "surface_variant"
+pinned = [ "org.gnome.Nautilus", "spotify", "zen", "kitty" ]
+pinned_opacity = 1.0
+scale = 1.3
+
+[widget.temp]
+capsule = true
+capsule_padding = 0
+color = "on_surface"
+display = "text"
+font_family = "Roboto"
+highlight_color = "primary"
+icon_color = "primary"
+scale = 0.80000000000000004
+show_label = false
+
+[widget.text_10]
+type = "text"
+
+[widget.text_2]
+capsule = true
+capsule_padding = 14
+enabled = false
+type = "text"
+
+[widget.text_3]
+capsule = true
+capsule_opacity = 0.0
+capsule_padding = 0
+color = "primary"
+enabled = false
+scale = 1.25
+type = "text"
+
+    [widget.text_3.actions]
+    middle = "none"
+
+[widget.text_4]
+capsule_opacity = 0.0
+capsule_padding = 0
+scale = 0.95000000000000007
+type = "text"
+
+[widget.text_5]
+type = "text"
+
+[widget.text_6]
+type = "text"
+
+[widget.text_7]
+type = "text"
+
+[widget.text_8]
+type = "text"
+
+[widget.text_9]
+capsule = true
+capsule_opacity = 0.0
+capsule_padding = 0
+text = ","
+type = "text"
+
+[widget.todo]
+scale = 0.80000000000000004
+type = "nightwatch75/todo:todo"
+
+[widget.todo_2]
+type = "nightwatch75/todo:todo"
+
+[widget.volume]
+capsule = true
+capsule_padding = 0
+color = "primary"
+icon_color = "on_surface"
+scale = 0.80000000000000004
+show_label = false
+
+[widget.wallpaper]
+capsule = true
+capsule_padding = 7
+scale = 0.80000000000000004
+
+[widget.weather]
+capsule = true
+capsule_fill = "surface_variant"
+capsule_foreground = "surface_variant"
+capsule_opacity = 0.0
+capsule_padding = 18
+color = "on_surface"
+max_length = 111
+scale = 0.75
+show_condition = false
+
+[widget.workspaces]
+active_pill_size = 1.75
+anchor = true
+capsule = true
+capsule_fill = "primary"
+capsule_foreground = "primary"
+capsule_opacity = 0.0
+capsule_padding = 0
+capsule_radius = 16
+color = "surface_variant"
+empty_color = "surface_variant"
+icon_color = "surface"
+occupied_color = "surface_variant"
+scale = 1.25
+style = "minimal"
