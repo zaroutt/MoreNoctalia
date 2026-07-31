@@ -1,0 +1,77 @@
+layout {
+    focus-ring {
+        on
+        width 2
+        active-color "#ebdbb2"
+    }
+
+    shadow {
+        off
+        softness 1
+        spread -1
+        offset x=6 y=6
+        color "#000000"
+    }
+
+    border {
+        off
+        width 3
+        active-color "#8ec07c"
+        inactive-color "#2a3925"
+    }
+}
+
+prefer-no-csd
+
+window-rule {
+    match app-id=r"^org\.wezfurlong\.wezterm$"
+    default-column-width
+}
+
+window-rule {
+    geometry-corner-radius 17
+    clip-to-geometry true
+    draw-border-with-background false
+    background-effect {
+        blur true
+        xray true
+        liquid-glass {
+            refraction-strength 1
+            power-factor 1
+            refraction-power 1
+            glow-weight 0.0
+            edge-lighting 1
+            saturation 0.9
+            vibrancy 0.25
+            adaptive-dim 0.25
+            adaptive-boost 0.25
+            physical-refraction 0
+            lens-distortion 0
+            fringing 0
+            refraction-dilute 0
+        }
+    }
+}
+
+window-rule { match app-id=r"kitty"; opacity 1.0; }
+
+window-rule { match app-id=r"zen" title=r"Zen Browser"; open-maximized true; opacity 1.0; open-on-workspace "2"; }
+
+window-rule { match app-id=r"Spotify"; open-maximized true; opacity 1.0; open-on-workspace "spotify"; }
+
+blur {
+    off
+    passes 5
+    offset 5
+    noise 0
+}
+
+layer-rule {
+    place-within-backdrop true
+}
+
+overview {
+    workspace-shadow {
+        off
+    }
+}

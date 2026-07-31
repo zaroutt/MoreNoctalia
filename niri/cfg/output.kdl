@@ -1,0 +1,6 @@
+output "DP-1" {
+    mode "1920x1080@164.599"
+    scale 1.0
+    transform "normal"
+    position x=0 y=0
+}
