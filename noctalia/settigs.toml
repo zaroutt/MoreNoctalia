@@ -1,0 +1,745 @@
+config_version = 12
+
+[accessibility]
+ui_scale = 0.90000000596046448
+
+[bar]
+order = [ "perfection", "kde", "test" ]
+
+    [bar.kde]
+    enabled = false
+    thickness = 42
+
+        [[bar.kde.capsule_group]]
+        accordion = false
+        accordion_direction = "end"
+        enabled = true
+        fill = "surface_variant"
+        id = "g1"
+        members = [ "clock" ]
+        opacity = 0.0
+        padding = 6.0
+
+        [[bar.kde.capsule_group]]
+        accordion = true
+        accordion_direction = "start"
+        enabled = true
+        fill = "surface_variant"
+        id = "g2"
+        members = [
+            "custom_button_4",
+            "custom_button_4",
+            "recorder_9",
+            "todo_4",
+            "wallhaven_2",
+            "wallpaper",
+            "mpvpaper_4",
+            "clipboard",
+            "notes_8"
+        ]
+        opacity = 0.0
+        padding = 6.0
+        widget_spacing = 12
+
+        [[bar.kde.capsule_group]]
+        accordion = false
+        accordion_direction = "end"
+        enabled = true
+        fill = "surface_variant"
+        id = "g3"
+        members = [ "control-center", "custom_button_7", "taskbar" ]
+        opacity = 0.0
+        padding = 2.0
+        radius = 4.0
+
+    [bar.perfection]
+    auto_hide = true
+    background_opacity = 0.86999998055398464
+    border = "primary"
+    capsule_thickness = 0.99999998137354851
+    center = []
+    enabled = false
+    end = [ "group:g4", "group:g2", "spacer_3", "weather", "spacer_3", "clock", "spacer_2" ]
+    font_family = "Adwaita Sans"
+    margin_ends = 0
+    padding = 0
+    panel_overlap = 0
+    position = "bottom"
+    radius = 0
+    scale = 0.95000000670552254
+    start = [ "group:g1", "taskbar", "spacer_2", "workspaces" ]
+    thickness = 38
+
+        [[bar.perfection.capsule_group]]
+        accordion = true
+        accordion_direction = "start"
+        enabled = true
+        fill = "surface_variant"
+        id = "g4"
+        members = [
+            "custom_button_5",
+            "recorder_11",
+            "custom_button_7",
+            "spacer_1",
+            "custom_button_3",
+            "notes_11",
+            "custom_button_7",
+            "spacer_1",
+            "custom_button_3",
+            "wallhaven_5",
+            "custom_button_7",
+            "spacer_1",
+            "custom_button_3",
+            "mpvpaper_5",
+            "custom_button_7",
+            "spacer_1",
+            "custom_button_3",
+            "clipboard",
+            "custom_button_7",
+            "spacer_1",
+            "custom_button_3",
+            "wallpaper",
+            "custom_button_7",
+            "spacer_1",
+            "custom_button_3",
+            "volume",
+            "custom_button_3",
+            "custom_button_7"
+        ]
+        opacity = 0.0
+        padding = 6.0
+
+        [[bar.perfection.capsule_group]]
+        accordion = false
+        accordion_direction = "end"
+        border = ""
+        enabled = true
+        fill = "surface_variant"
+        id = "g1"
+        members = [ "control-center" ]
+        opacity = 0.0
+        padding = 2.0
+        radius = 4.0
+        widget_spacing = 0
+
+        [[bar.perfection.capsule_group]]
+        accordion = false
+        accordion_direction = "end"
+        enabled = true
+        fill = "surface_variant"
+        id = "g2"
+        members = [ "media", "text_15" ]
+        opacity = 0.0
+        padding = 6.0
+
+    [bar.test]
+    border_width = 1.5
+    capsule_thickness = 0.7799999862909317
+    center = [ "group:g2" ]
+    enabled = true
+    end = [ "group:g1", "control-center" ]
+    margin_edge = 5
+    margin_ends = 200
+    padding = 6
+    panel_overlap = 0
+    scale = 1.0500000081956387
+    start = [ "group:g4", "group:g3", "group:g5" ]
+    thickness = 39
+
+        [[bar.test.capsule_group]]
+        accordion = false
+        accordion_direction = "end"
+        border = "outline"
+        enabled = true
+        fill = "surface_variant"
+        foreground = "#FFFFFF"
+        id = "g1"
+        members = [ "volume", "cpu", "ram", "temp" ]
+        opacity = 1.0
+        padding = 6.0
+        radius = 0.0
+        widget_spacing = 11
+
+        [[bar.test.capsule_group]]
+        accordion = false
+        accordion_direction = "end"
+        border = "outline"
+        enabled = true
+        fill = "surface_variant"
+        foreground = "#FFFFFF"
+        id = "g2"
+        members = [ "custom_button_8", "clock", "custom_button_9", "date" ]
+        opacity = 1.0
+        padding = 6.0
+        radius = 0.0
+
+        [[bar.test.capsule_group]]
+        accordion = false
+        accordion_direction = "end"
+        border = "outline"
+        enabled = true
+        fill = "surface_variant"
+        foreground = "#FFFFFF"
+        id = "g3"
+        members = [ "media" ]
+        opacity = 1.0
+        padding = 6.0
+        radius = 0.0
+
+        [[bar.test.capsule_group]]
+        accordion = true
+        accordion_direction = "end"
+        border = "outline"
+        enabled = true
+        fill = "surface_variant"
+        foreground = "#FFFFFF"
+        id = "g4"
+        members = [ "custom_button_5", "recorder", "notes", "wallhaven" ]
+        opacity = 1.0
+        padding = 6.0
+        radius = 0.0
+
+        [[bar.test.capsule_group]]
+        accordion = false
+        accordion_direction = "end"
+        border = "outline"
+        enabled = true
+        fill = "surface_variant"
+        foreground = "#FFFFFF"
+        id = "g5"
+        members = [ "wallpaper", "clipboard" ]
+        opacity = 1.0
+        padding = 6.0
+        radius = 0.0
+
+[control_center]
+show_shortcut_labels = false
+sidebar = "full"
+sidebar_section = "none"
+
+[desktop_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "desktop-widget-0000000000000001", "desktop-widget-0000000000000002" ]
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget.desktop-widget-0000000000000001]
+    box_height = 48.0
+    box_width = 64.0
+    cx = 32.0
+    cy = 20.0
+    output = "DP-1"
+    rotation = 0.0
+    type = "clock"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000001.settings]
+        background_opacity = 0.0
+
+    [desktop_widgets.widget.desktop-widget-0000000000000002]
+    box_height = 64.0
+    box_width = 80.0
+    cx = 88.0
+    cy = 20.0
+    output = "DP-1"
+    rotation = 0.0
+    type = "clock"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000002.settings]
+        background_opacity = 0.0
+        format = "{:%a %d %b}"
+
+[dock]
+auto_hide = true
+enabled = true
+icon_size = 30
+magnification_scale = 1.2500000037252903
+main_axis_padding = 14
+margin_edge = 0
+position = "bottom"
+
+[location]
+auto_locate = true
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@winit", "lockscreen-login-box@DP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 898.0
+    output = "DP-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@winit"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 459.0
+    cy = 799.0
+    output = "winit"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@winit".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+[nightlight]
+enabled = true
+
+[plugins]
+enabled = [
+    "nzlov/daily-wallpaper",
+    "gustav0ar/drive-health",
+    "jinliu/imagemagick-clock",
+    "noctalia/notes",
+    "thepunkoff/pomodoro",
+    "noctalia/screen_recorder",
+    "joshuaslate/shelly",
+    "noctalia/timer",
+    "nightwatch75/todo",
+    "noctalia/translator",
+    "noctalia/mpvpaper",
+    "noctalia/wallhaven"
+]
+
+[shell]
+app_icon_color = "primary"
+corner_radius_scale = 0.0
+font_family = "Adwaita Sans"
+panel_anchor_bar = "test"
+
+    [shell.animation]
+    speed = 0.45000000670552254
+
+    [shell.panel]
+    borders = true
+    control_center_placement = "attached"
+    floating_layer = "top"
+    open_near_click_control_center = true
+    polkit_position = "auto"
+    wallpaper_position = "auto"
+
+    [shell.shadow]
+    alpha = 0.99999997764825821
+
+[system.monitor]
+cpu_temp_critical_threshold = 91
+ram_pct_activity_threshold = 78
+ram_pct_critical_threshold = 100
+
+[theme]
+builtin = "Dracula"
+community_palette = "Miasma"
+custom_palette = "wallhaven-6lylmw-fs"
+mode = "dark"
+source = "builtin"
+wallpaper_scheme = "faithful"
+
+    [theme.templates]
+    community_ids = [ "opencode", "spicetify", "neovim", "papirus-icons", "waybar" ]
+
+[wallpaper.automation]
+enabled = false
+
+[wallpaper.default]
+path = "/home/za/Pictures/Wallpapers/wallhaven-6lylmw.png"
+
+[wallpaper.last]
+path = "/home/za/Pictures/Wallpapers/wallhaven-6lylmw.png"
+
+[wallpaper.monitors.DP-1]
+path = "/home/za/Pictures/Wallpapers/wallhaven-6lylmw.png"
+
+[wallpaper.monitors.winit]
+path = "/home/za/Pictures/Wallpapers/daily-wallpaper/bing-en-us-2026-08-06.jpg"
+
+[[wallpaper.favorite]]
+community_palette = "GruvboxAlt"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-5ymlv9_3840x2160.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+palette_source = "wallpaper"
+path = "/home/za/Pictures/Wallpapers/wallhaven-lyj6xq_3840x2160.png"
+theme_mode = "light"
+wallpaper_scheme = "faithful"
+
+[[wallpaper.favorite]]
+palette_source = "wallpaper"
+path = "/home/za/Pictures/Wallpapers/Tranquility.png"
+theme_mode = "dark"
+wallpaper_scheme = "vibrant"
+
+[[wallpaper.favorite]]
+community_palette = "GruvboxAlt"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-5y3l75_3840x2160.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+community_palette = "Vesper"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-ly2l2p_3840x2160.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+community_palette = "Oxocarbon"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-qrmykq_3840x2160.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+community_palette = "Oxocarbon"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-w5dp5q_3840x2160.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+community_palette = "Vesper"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-og6rql_1920x1080.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+community_palette = "Catppuccin Mocha Pink"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/motorcycle.jpg"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+community_palette = "Garnet"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-d8ojrl_1920x1080.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+community_palette = "Hexa34C"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-g79127_1920x1080.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+community_palette = "Catppuccin Mocha Pink"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-21opwx.jpg"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+palette_source = "wallpaper"
+path = "/home/za/Pictures/Wallpapers/wallhaven-ogjxz5.png"
+theme_mode = "dark"
+wallpaper_scheme = "faithful"
+
+[[wallpaper.favorite]]
+palette_source = "wallpaper"
+path = "/home/za/Pictures/Wallpapers/wallhaven-xe9ljv.jpg"
+theme_mode = "dark"
+wallpaper_scheme = "soft"
+
+[[wallpaper.favorite]]
+community_palette = "Tokyo Night Moon"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-6lykzx.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+palette_source = "wallpaper"
+path = "/home/za/Pictures/Wallpapers/wallhaven-p236me_1920x1080.png"
+theme_mode = "dark"
+wallpaper_scheme = "faithful"
+
+[[wallpaper.favorite]]
+community_palette = "One"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-e82xxr_3840x2160.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+palette_source = "wallpaper"
+path = "/home/za/Pictures/Wallpapers/wallhaven-k7859m_1920x1080.png"
+theme_mode = "dark"
+wallpaper_scheme = "faithful"
+
+[[wallpaper.favorite]]
+builtin_palette = "Dracula"
+palette_source = "builtin"
+path = "/home/za/Pictures/Wallpapers/wallhaven-6lylmw.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+builtin_palette = "Dracula"
+palette_source = "builtin"
+path = "/home/za/Pictures/Wallpapers/wallhaven-k8d7j7.jpg"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+community_palette = "GruvboxAlt"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-1qggw9_3840x2160.png"
+theme_mode = "light"
+
+[[wallpaper.favorite]]
+builtin_palette = "Gruvbox"
+palette_source = "builtin"
+path = "/home/za/Pictures/Wallpapers/wallhaven-5yd6d5_1920x1080.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+community_palette = "Peche"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-yq9x9k.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+builtin_palette = "Ayu"
+palette_source = "builtin"
+path = "/home/za/Pictures/Wallpapers/wallhaven-mly381_3840x2160.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+builtin_palette = "Dracula"
+palette_source = "builtin"
+path = "/home/za/Pictures/Wallpapers/flowering-rain.png"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+builtin_palette = "Kanagawa"
+palette_source = "builtin"
+path = "/home/za/Pictures/Wallpapers/a4ac6.jpg"
+theme_mode = "dark"
+
+[[wallpaper.favorite]]
+community_palette = "Miasma"
+palette_source = "community"
+path = "/home/za/Pictures/Wallpapers/wallhaven-yq2zwl_3840x2160.png"
+theme_mode = "dark"
+
+[widget.clipboard]
+scale = 1.0
+
+[widget.clock]
+capsule_opacity = 0.0
+format = "{:%H:%M}"
+scale = 1.1500000000000001
+
+[widget.control-center]
+capsule = true
+capsule_border = "outline"
+capsule_fill = "surface_variant"
+capsule_foreground = "#FFFFFF"
+capsule_opacity = 1.0
+capsule_padding = 3
+capsule_radius = 0
+custom_image = "/usr/share/icons/cachyos.svg"
+glyph = "nfc-off"
+icon_color = "#FFFFFF"
+scale = 1.3500000000000001
+
+[widget.cpu]
+glyph = "cpu"
+show_glyph = true
+visualization = "none"
+
+[widget.custom_button_2]
+glyph = "north-star"
+scale = 1.2000000000000002
+type = "custom_button"
+
+[widget.custom_button_3]
+capsule = true
+capsule_opacity = 0.0
+capsule_padding = 0
+custom_image = "/home/za/Downloads/457d9d41cc81f410cc5d88f0c503ab53.png"
+custom_image_colorize = true
+interactive = false
+scale = 2.5
+type = "custom_button"
+
+[widget.custom_button_4]
+scale = 1.1500000000000001
+
+[widget.custom_button_5]
+glyph = "north-star"
+scale = 1.1500000000000001
+type = "custom_button"
+
+[widget.custom_button_6]
+scale = 1.05
+
+[widget.custom_button_7]
+glyph = "backslash"
+
+[widget.custom_button_8]
+glyph = "clock-filled"
+interactive = false
+type = "custom_button"
+
+[widget.custom_button_9]
+glyph = "calendar-week"
+interactive = false
+type = "custom_button"
+
+[widget.date]
+format = "{:%B %d, %Y}"
+
+[widget.media]
+capsule_border = "outline"
+capsule_opacity = 1.0
+capsule_radius = 7
+color = "#FFFFFF"
+hide_when_no_media = false
+icon_color = "#FFFFFF"
+max_length = 232
+scale = 0.85000000000000009
+
+[widget.mpvpaper_5]
+type = "noctalia/mpvpaper:mpvpaper"
+
+[widget.notes]
+type = "noctalia/notes:notes"
+
+[widget.notes_10]
+scale = 0.80000000000000004
+type = "noctalia/notes:notes"
+
+[widget.notes_11]
+type = "noctalia/notes:notes"
+
+[widget.notes_9]
+type = "noctalia/notes:notes"
+
+[widget.ram]
+glyph = "brand-speedtest"
+icon_color = "#FFFFFF"
+visualization = "none"
+
+[widget.recorder]
+type = "noctalia/screen_recorder:recorder"
+
+[widget.recorder_10]
+scale = 0.75
+type = "noctalia/screen_recorder:recorder"
+
+[widget.recorder_11]
+scale = 1.1000000000000001
+type = "noctalia/screen_recorder:recorder"
+
+[widget.session]
+capsule = true
+capsule_border = "outline"
+capsule_radius = 6
+scale = 0.95000000000000007
+
+[widget.spacer_1]
+enabled = false
+
+[widget.spacer_2]
+length = 35
+scale = 1.1000000000000001
+type = "spacer"
+
+[widget.spacer_3]
+length = 28
+type = "spacer"
+
+[widget.taskbar]
+active_indicator_color = "outline"
+capsule_opacity = 0.23999999999999999
+capsule_radius = 2
+focused_color = "on_surface"
+group_single_icon_per_app = true
+icon_color = "on_surface"
+pinned = [ "spotify", "zen", "kitty", "org.gnome.Nautilus" ]
+pinned_opacity = 1.0
+scale = 2.1000000000000001
+show_workspace_label = false
+window_title_max_width = 70
+workspace_group_capsule = false
+
+[widget.temp]
+highlight_color = "#FFFFFF"
+icon_color = "#FFFFFF"
+visualization = "none"
+
+[widget.text_15]
+enabled = false
+type = "text"
+
+[widget.todo_5]
+scale = 0.85000000000000009
+type = "nightwatch75/todo:todo"
+
+[widget.volume]
+icon_color = "#FFFFFF"
+scale = 1.0
+
+[widget.wallhaven]
+type = "noctalia/wallhaven:wallhaven"
+
+[widget.wallhaven_3]
+scale = 0.80000000000000004
+type = "noctalia/wallhaven:wallhaven"
+
+[widget.wallhaven_4]
+scale = 0.90000000000000002
+type = "noctalia/wallhaven:wallhaven"
+
+[widget.wallhaven_5]
+type = "noctalia/wallhaven:wallhaven"
+
+[widget.wallpaper]
+scale = 1.0
+
+[widget.weather]
+capsule_radius = 6
+max_length = 217
+scale = 0.85000000000000009
+
+[widget.workspaces]
+capsule = true
+enabled = false
+hide_when_empty = true
+scale = 1.2000000000000002
+show_labels = false
